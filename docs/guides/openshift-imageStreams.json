@@ -24,7 +24,7 @@
                         "annotations": {
                             "openshift.io/display-name": "S2I Startx SQLUP (latest)",
                             "description": "Builder for SQLUP Database schema upgrader based on alpine (latest)",
-                            "iconClass": "icon-mysql",
+                            "iconClass": "icon-mysql-database",
                             "tags": "builder,startx,alpine,nodejs,sql,sqlup-latest",
                             "supports": "mysql",
                             "version": "latest",
@@ -40,7 +40,7 @@
                         "annotations": {
                             "openshift.io/display-name": "S2I Startx SQLUP (testing)",
                             "description": "Builder for SQLUP Database schema upgrader based on alpine (test)",
-                            "iconClass": "icon-database",
+                            "iconClass": "icon-mysql-database",
                             "tags": "builder,startx,alpine,nodejs,sql,sqlup-testing",
                             "supports": "mysql",
                             "version": "testing",
@@ -72,7 +72,7 @@
                         "annotations": {
                             "openshift.io/display-name": "S2I Startx SQLUP (0.0.5)",
                             "description": "Simple and extensible API framework based on alpine (v0.0.5)",
-                            "iconClass": "icon-database",
+                            "iconClass": "icon-mysql-database",
                             "tags": "builder,startx,alpine,nodejs,sql,sqlup-0.0.5",
                             "supports": "mysql",
                             "version": "0.0.5",
