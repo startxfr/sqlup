@@ -1,4 +1,4 @@
-<img align="right" height="50" src="https://raw.githubusercontent.com/startxfr/sqlup/dev/docs/assets/logo.svg?sanitize=true">
+<img align="right" height="50" src="https://raw.githubusercontent.com/startxfr/sqlup/master/docs/assets/logo.svg?sanitize=true">
 
 # Writting an issue to dev team
 
