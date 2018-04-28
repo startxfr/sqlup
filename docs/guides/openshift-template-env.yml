@@ -4,7 +4,7 @@ metadata:
   name: sqlup-environement-template
   annotations:
     description: Template for creating an SQLUP job with configuration injected as environement variable
-    iconClass: icon-database
+    iconClass: icon-mysql-database
     tags: sqlup,nodejs,startx,job,sql
 objects:
 - kind: ConfigMap
