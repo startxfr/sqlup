@@ -22,7 +22,7 @@ before_install:
 
 script:
 - docker build --squash -t $REPO:$TAG .
-- docker run -d --name sxapi $REPO:$TAG
+- docker run -d --name sxapi $REPO:$TAG npm test
 
 after_success:
 - docker push $REPO:$TAG
