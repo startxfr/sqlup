@@ -66,7 +66,7 @@ objects:
                 path: v0.0.1.sql
 parameters:
 - name: IMAGE_NAME
-  description: SQLUP release to use (available are latest, testing, stable or 0.0.7)
+  description: SQLUP release to use (available are latest, testing, stable or 0.0.8)
   value: latest
   required: true
 - name: DB_HOST
