@@ -1,6 +1,6 @@
 [![sqlup](https://raw.githubusercontent.com/startxfr/sqlup/dev/docs/assets/logo.svg?sanitize=true)](https://github.com/startxfr/sqlup)
 
-# sqlup project ![sqlup](https://img.shields.io/badge/latest-v0.2.18-blue.svg)
+# sqlup project ![sqlup](https://img.shields.io/badge/latest-beta-blue.svg)
 
 **sqlup** for **sql** **up**grade is an an open-source job container who apply sql patch to a database following a sequentially versionned plan.
 
