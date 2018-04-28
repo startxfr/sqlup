@@ -18,7 +18,7 @@ before_install:
 - docker pull node:8-alpine
 - docker images
 - docker login -u $DOCKER_USER -p $DOCKER_PASS
-- export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; elif [ "$TRAVIS_BRANCH"  == "test" ]; then echo "testing"; else echo $RELEASE ; fi`
+- export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; elif [ "$TRAVIS_BRANCH"  == "test" ]; then echo "testing"; elif [ "$TRAVIS_BRANCH"  == "docker" ]; then echo "stable"; else echo $RELEASE ; fi`
 
 script:
 - docker build --squash -t $REPO:$TAG .
