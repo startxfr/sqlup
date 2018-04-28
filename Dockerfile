@@ -1,7 +1,7 @@
 FROM node:8-alpine
 MAINTAINER STARTX "dev@startx.fr"
 
-ENV SQLUP_VERSION=0.0.1 \
+ENV SQLUP_VERSION=0.0.3 \
     SX_ID="startx/sqlup" \
     SX_NAME="Startx SQLUP (alpine)" \
     SX_SUMMARY="Small an eXtensible API framework to build small and flexible microservices using a single configuration file" \
