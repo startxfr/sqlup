@@ -1,11 +1,11 @@
 FROM node:8-alpine
 MAINTAINER STARTX "dev@startx.fr"
 
-ENV SQLUP_VERSION=0.0.4 \
+ENV SQLUP_VERSION=0.0.5 \
     SX_ID="startx/sqlup" \
     SX_NAME="Startx SQLUP (alpine)" \
-    SX_SUMMARY="Small an eXtensible API framework to build small and flexible microservices using a single configuration file" \
-    DESCRIPTION="SQLUP $SQLUP_VERSION available as docker container is a base platform for building and running your API projects" \
+    SX_SUMMARY="open-source job container to apply sql patch to a database following a sequentially versionned plan" \
+    DESCRIPTION="SQLUP $SQLUP_VERSION will help you create, initialize and apply an update strategy to your database containers" \
     SX_DEBUG=true \
     NODE_ENV=development \
     APP_PATH=/usr/src/app \
