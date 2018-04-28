@@ -1,0 +1,3 @@
+sqlup:
+  container_name: "sqlup"
+  build: .

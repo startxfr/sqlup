@@ -1,0 +1,90 @@
+{
+  "name": "sqlup",
+  "version": "0.0.1",
+  "description": "sqlup is a short lived application (job) for updating SQL databases schema",
+  "author": "STARTX <dev+sqlup@startx.fr>",
+  "homepage": "https://github.com/startxfr/sqlup",
+  "license": "GPL-3.0",
+  "private": false,
+  "analyze": true,
+  "contributors": [
+    {
+      "name": "startx-dev",
+      "email": "dev@startx.fr"
+    },
+    {
+      "name": "mallowtek",
+      "email": "mallowtek@gmail.com"
+    }
+  ],
+  "keywords": [
+    "sqlup",
+    "startx",
+    "job",
+    "nodejs",
+    "dev",
+    "versionning",
+    "database",
+    "mariadb",
+    "posgresql"
+  ],
+  "main": "app.js",
+  "directories": {
+    "lib": "core",
+    "doc": "docs",
+    "test": "test"
+  },
+  "scripts": {
+    "dev": "npm test && npm start",
+    "dev:env": "env",
+    "dev:clean": "rimraf package-lock.json",
+    "dev:update": "npm update --only=dev --save && npm update --save",
+    "dev:install": "npm install --only=dev && npm install && npm dedupe",
+    "dev:build": "npm run dev:env -s && npm run dev:clean -s && npm run dev:update -s && npm run dev:install -s ",
+    "dev:start": "npm test && npm start",
+    "test": "./node_modules/.bin/mocha --exit",
+    "test:clean": "rimraf package-lock.json *.md docs",
+    "test:install": "npm install --only=dev npm install && npm dedupe",
+    "test:build": "npm run test:clean -s && npm run test:install -s ",
+    "test:start": "npm test && npm start",
+    "prod": "npm run prod:build && npm run prod:start",
+    "prod:clean": "rimraf package-lock.json *.md docs test",
+    "prod:install": "npm install --production && npm dedupe",
+    "prod:build": "npm run prod:clean -s && npm run prod:install -s ",
+    "prod:start": "npm start",
+    "build": "npm run prod:install -s",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/startxfr/sqlup.git"
+  },
+  "bugs": {
+    "url": "https://github.com/startxfr/sqlup/issues"
+  },
+  "dependencies": {
+    "merge": "~1.2.0",
+    "async": "~2.6.0",
+    "mustache": "~2.3.0",
+    "timer-machine": "~1.1.0",
+    "ip": "~1.1.5",
+    "mysql": "~2.15.0",
+    "pg": "~7.4.1",
+    "aws-sdk": "~2.162.0"
+  },
+  "devDependencies": {
+    "mocha": "~4.0.1",
+    "chai": "~4.1.2",
+    "sinon": "~4.1.2",
+    "rimraf": "^2.2.8"
+  },
+  "engines": {
+    "node": ">= 8.9.1",
+    "npm": ">= 5.5.1"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ]
+}
