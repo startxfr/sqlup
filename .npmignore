@@ -3,6 +3,7 @@ node_modules
 npm-publish.sh
 docs
 test
+s2i
 .travis.yml
 .gitignore
 .dockerignore
