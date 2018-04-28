@@ -47,6 +47,5 @@ RUN  apk update && apk upgrade \
  &&  chmod -R g=u $APP_PATH $CONF_PATH $DATA_PATH /s2i /.npm /.config
 
 USER 1001
-EXPOSE 8080
 WORKDIR $APP_PATH
 CMD [ "npm" , "start" ]
