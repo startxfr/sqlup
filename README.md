@@ -2,11 +2,12 @@
 
 # sqlup project ![sqlup](https://img.shields.io/badge/latest-v0.2.18-blue.svg)
 
-**sqlup** for **s**imple and e**x**tensible **api** (Application Programming Interface) is an an open-source framework for quickly building simple and small API based on microservice architecture.
+**sqlup** for **sql** **up**grade is an an open-source job container who apply sql patch to a database following a sequentially versionned plan.
 
-Very light (application less than 100Ko, full container stack for less than 30Mo) and configured with a single json file, you can build instantly small atomic API endpoints as well as fully featured enterprise-sized API.
+Very light (application less than 100Ko, full container stack for less than 30Mo) and configured with a single json file, 
+you deploy and follow update lifecycle of database stored in mysql, posgresql or dynamodb backend.
 
-[![Build Status](https://travis-ci.org/startxfr/sqlup.svg?branch=dev)](https://travis-ci.org/startxfr/sqlup) 
+[![Build Status](https://travis-ci.org/startxfr/sqlup.svg?branch=master)](https://travis-ci.org/startxfr/sqlup) 
 [![docker build](https://img.shields.io/docker/build/startx/sqlup.svg)](https://hub.docker.com/r/startx/sqlup/) 
 [![npm version](https://badge.fury.io/js/sqlup.svg)](https://www.npmjs.com/package/sqlup) 
 [![npm dependencies](https://david-dm.org/startxfr/sqlup.svg)](https://www.npmjs.com/package/sqlup) 
