@@ -1,7 +1,7 @@
 {
   "name": "sqlup",
-  "version": "0.0.1",
-  "description": "sqlup is a short lived application (job) for updating SQL databases schema",
+  "version": "0.0.2",
+  "description": "short lived application (job) for updating SQL database schema following a versionned plan",
   "author": "STARTX <dev+sqlup@startx.fr>",
   "homepage": "https://github.com/startxfr/sqlup",
   "license": "GPL-3.0",
