@@ -1,0 +1,74 @@
+{
+    "kind": "ImageStreamList", 
+    "apiVersion": "v1",
+    "metadata": {},
+    "items": [
+        {
+            "kind": "ImageStream",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "sqlup",
+                "annotations": {
+                    "openshift.io/display-name": "Startx SQLUP (S2I)",
+                    "openshift.io/generated-by": "STARTX"
+                },
+                "labels": {
+                    "base-image": "sqlup",
+                    "provider": "startx"
+                }
+            },
+            "spec": {
+                "tags": [
+                    {
+                        "name": "latest",
+                        "annotations": {
+                            "openshift.io/display-name": "S2I Startx SQLUP (latest)",
+                            "description": "Builder for SQLUP Database schema upgrader based on alpine (latest)",
+                            "iconClass": "icon-mysql",
+                            "tags": "builder,startx,alpine,nodejs,sql,sqlup-latest",
+                            "supports": "mysql",
+                            "version": "latest",
+                            "sampleRepo": "https://github.com/startxfr/sqlup-example.git"
+                        },
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "startx/sqlup:latest"
+                        }
+                    },
+                    {
+                        "name": "testing",
+                        "annotations": {
+                            "openshift.io/display-name": "S2I Startx SQLUP (testing)",
+                            "description": "Builder for SQLUP Database schema upgrader based on alpine (test)",
+                            "iconClass": "icon-nodejs",
+                            "tags": "builder,startx,alpine,nodejs,sql,sqlup-testing",
+                            "supports": "mysql",
+                            "version": "testing",
+                            "sampleRepo": "https://github.com/startxfr/sqlup-example.git"
+                        },
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "startx/sqlup:testing"
+                        }
+                    },
+                    {
+                        "name": "0.0.2",
+                        "annotations": {
+                            "openshift.io/display-name": "S2I Startx SQLUP (0.0.2)",
+                            "description": "Simple and extensible API framework based on alpine (v0.0.2)",
+                            "iconClass": "icon-nodejs",
+                            "tags": "builder,startx,alpine,nodejs,sql,sqlup-0.0.2",
+                            "supports": "mysql",
+                            "version": "0.0.2",
+                            "sampleRepo": "https://github.com/startxfr/sqlup-example.git"
+                        },
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "startx/sqlup:0.0.2"
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

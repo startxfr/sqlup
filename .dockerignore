@@ -1,0 +1,10 @@
+nbproject
+node_modules
+docs
+.gitignore
+.dockerignore
+.npmignore
+.git
+openshift-*
+*.md
+docker-compose.yml

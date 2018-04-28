@@ -1,0 +1,13 @@
+nbproject
+node_modules
+npm-publish.sh
+docs
+test
+.travis.yml
+.gitignore
+.dockerignore
+.npmignore
+.git
+openshift-*
+*.md
+docker-compose.yml
