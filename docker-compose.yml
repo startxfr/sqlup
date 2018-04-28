@@ -9,7 +9,7 @@ app:
     - CONF_PATH=/sqlup
     - SQLUP_HOST=db-mariadb
     - SQLUP_PWD=hguyFtgfR4r9R4r76
-    - SQLUP_DB=sqlup_test21
+    - SQLUP_DB=sqlup_test
   links:
     - "db-postgres"
     - "db-mariadb"
