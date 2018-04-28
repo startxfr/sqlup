@@ -1,0 +1,22 @@
+#!/bin/sh -e
+#
+# S2I assemble script for the 'sqlup' image.
+# The 'assemble' script builds your application source ready to run.
+#
+# For more information refer to the documentation:
+#  https://github.com/openshift/source-to-image/blob/master/docs/builder_image.md
+#
+
+cd $APP_PATH
+if [[ -d /tmp/src ]]; then
+    cp -R /tmp/src/* $APP_PATH/
+    if [[ -f /tmp/src/sqlup.json ]]; then
+        cp -f /tmp/src/sqlup.json $CONF_PATH/sqlup.json
+    fi;
+    rm -rf /tmp/src
+fi;
+npm install -production
+npm dedupe
+npm cache verify
+npm cache clean --force
+exit 0;
