@@ -1,13 +1,13 @@
 FROM node:8-alpine
 MAINTAINER STARTX "dev@startx.fr"
 
-ENV SQLUP_VERSION=0.0.5 \
+ENV SQLUP_VERSION=0.0.6 \
     SX_ID="startx/sqlup" \
     SX_NAME="Startx SQLUP (alpine)" \
     SX_SUMMARY="open-source job container to apply sql patch to a database following a sequentially versionned plan" \
     DESCRIPTION="SQLUP $SQLUP_VERSION will help you create, initialize and apply an update strategy to your database containers" \
-    SX_DEBUG=true \
-    NODE_ENV=development \
+    SX_DEBUG=false \
+    NODE_ENV=production \
     APP_PATH=/usr/src/app \
     CONF_PATH=/sqlup \
     DATA_PATH=/sqlup \
@@ -32,7 +32,6 @@ LABEL name="startx/sqlup-$SQLUP_VERSION" \
 
 COPY ./s2i /s2i
 COPY ./core $APP_PATH/core
-COPY ./test $APP_PATH/test
 COPY ./app.js $APP_PATH/app.js
 COPY ./package.json $APP_PATH/package.json
 
