@@ -9,7 +9,7 @@
 
 cd $APP_PATH
 if [[ -d /tmp/src ]]; then
-    cp -R /tmp/src/* $APP_PATH/
+    cp -R /tmp/src/* $DATA_PATH/
     if [[ -f /tmp/src/sqlup.json ]]; then
         cp -f /tmp/src/sqlup.json $CONF_PATH/sqlup.json
     fi;
