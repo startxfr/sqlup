@@ -1,3 +1,63 @@
-sqlup:
-  container_name: "sqlup"
-  build: .
+app:
+  container_name: "sqlup-dev"
+  image: node:8-alpine
+  environment:
+    - SX_DEBUG=true
+    - NODE_ENV=development
+    - APP_PATH=/usr/src/app
+    - DATA_PATH=/sqlup
+    - CONF_PATH=/sqlup
+    - SQLUP_HOST=db-mariadb
+    - SQLUP_PWD=hguyFtgfR4r9R4r76
+    - SQLUP_DB=sqlup_test21
+  links:
+    - "db-postgres"
+    - "db-mariadb"
+  volumes:
+    - "./:/usr/src/app:z"
+    - "./dev/:/sqlup:z"
+    - "./test:/usr/src/app/test:z"
+  working_dir: /usr/src/app
+## build application 
+  command: ["npm" , "run" , "build"]
+## run application 
+#  command: ["npm" , "start"]
+## build and start application for dev environement
+#  command: ["npm" , "run", "dev"]
+## install application for dev environement
+#  command: ["npm",  "run", "dev:install"]
+## update application depndencies
+#  command: ["npm" , "run" , "dev:update"]
+## build application for dev environement
+#  command: ["npm" , "run" , "dev:build"]
+## start application for dev environement
+#  command: ["npm" , "run" , "dev:start"]
+## run application test
+#  command: ["npm" , "test"]
+## build application for testing
+#  command: ["npm" , "run" , "test:build"]
+## start application for testing
+#  command: ["npm" , "run" , "test:start"]
+## build application for production
+#  command: ["npm" , "run" , "prod:build"]
+## start application for production
+#  command: ["npm" , "run" , "prod:start"]
+## build and start application for production
+#  command: ["npm" , "run" , "prod"]
+
+db-postgres:
+  image: postgres:10.1-alpine
+  container_name: "sqlup-dev-db-postgres"
+  restart: always
+  ports:
+    - "5432"
+  environment:
+    POSTGRES_PASSWORD: hguyFtgfR4r9R4r76
+
+db-mariadb:
+  image: mariadb:5.5
+  container_name: "sqlup-dev-db-mariadb"
+  mem_limit: 2g
+  memswap_limit: 3g
+  environment:
+   - MYSQL_ROOT_PASSWORD=hguyFtgfR4r9R4r76
