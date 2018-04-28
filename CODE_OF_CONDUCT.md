@@ -1,4 +1,4 @@
-[![sqlup](https://raw.githubusercontent.com/startxfr/sqlup/dev/docs/assets/logo.svg?sanitize=true)](https://github.com/startxfr/sqlup)
+[![sqlup](https://raw.githubusercontent.com/startxfr/sqlup/master/docs/assets/logo.svg?sanitize=true)](https://github.com/startxfr/sqlup)
 
 # Contributor Covenant Code of Conduct
 
