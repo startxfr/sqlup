@@ -4,7 +4,7 @@ metadata:
   name: sqlup-configmap-template
   annotations:
     description: Template for creating an SQLUP job with configuration stored in a configMap object
-    iconClass: icon-database
+    iconClass: icon-mysql-database
     tags: sqlup,nodejs,startx,job,sql
 objects:
 - kind: ConfigMap
@@ -67,7 +67,7 @@ objects:
                 path: v0.0.1.sql
 parameters:
 - name: IMAGE_NAME
-  description: SQLUP release to use (available are latest, testing, stable or 0.0.6)
+  description: SQLUP release to use (available are latest, testing, stable or 0.0.7)
   value: latest
   required: true
 - name: DB_HOST
