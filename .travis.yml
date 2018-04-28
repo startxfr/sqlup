@@ -17,7 +17,7 @@ before_install:
 - sudo service docker restart
 - docker pull node:8-alpine
 - docker images
-- docker login -u $DOCKER_USER -e $DOCKER_EMAIL -p $DOCKER_PASS
+- docker login -u $DOCKER_USER -p $DOCKER_PASS
 - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; elif [ "$TRAVIS_BRANCH"  == "test" ]; then echo "testing"; else echo $RELEASE ; fi`
 
 script:
