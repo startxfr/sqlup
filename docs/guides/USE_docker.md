@@ -165,7 +165,7 @@ The previous command will display action from the job container
 
 If you're familiar with Openshift PaaS, you will find 3 usefull templates to use in
 your project
-- [impage stream ready to import](./openshift-imageStreams.yml)
+- [images streams ready to import](./openshift-imageStreams.yml)
 - [template with configuration in configMap mounted volume](./openshift-template-configMap.yml)
 - [template for full build and deploy strategy](./openshift-template-build.yml)
 
