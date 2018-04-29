@@ -111,9 +111,9 @@ objects:
       provider: startx
       template: sqlup-template-build
   stringData:
-    MYSQL_ROOT_PASSWORD: "${DB_PWD}"
-    MYSQL_HOST: "${APP_NAME}"
-    MYSQL_DB: "${DB_NAME}"
+    MYSQL_ROOT_PASSWORD: ${DB_PWD}
+    SQLUP_HOST: ${APP_NAME}
+    MYSQL_DATABASE: ${DB_NAME}
 - kind: BuildConfig
   apiVersion: v1
   metadata:
@@ -163,13 +163,7 @@ objects:
       openshift.io/generated-by: STARTX
   spec:
     strategy:
-      type: Rolling
-      rollingParams:
-        updatePeriodSeconds: 1
-        intervalSeconds: 1
-        timeoutSeconds: 20
-        maxUnavailable: 25%
-        maxSurge: 25%
+      type: Recreate
     triggers:
     - type: ImageChange
       imageChangeParams:
@@ -211,6 +205,11 @@ objects:
                 secretKeyRef:
                   name: sqlup-credential
                   key: MYSQL_ROOT_PASSWORD
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: sqlup-credential
+                  key: MYSQL_DATABASE
           volumeMounts:
             - name: sqlup-mysql
               mountPath: /var/lib/mysql
@@ -219,10 +218,6 @@ objects:
         restartPolicy: Always
         terminationGracePeriodSeconds: 30
         dnsPolicy: ClusterFirst
-  status:
-    replicas: 1
-    updatedReplicas: 1
-    availableReplicas: 1
 - kind: DeploymentConfig
   apiVersion: v1
   metadata:
@@ -236,10 +231,6 @@ objects:
   spec:
     strategy:
       type: Recreate
-      recreateParams:
-        updatePeriodSeconds: 1
-        intervalSeconds: 1
-        timeoutSeconds: 60
     triggers:
     - type: ImageChange
       imageChangeParams:
@@ -265,6 +256,9 @@ objects:
         annotations:
           openshift.io/generated-by: STARTX
       spec:
+        volumes:
+          - name: sqlup-mysql
+            emptyDir: {}
         containers:
         - name: "${APP_NAME}-job"
           image: 
@@ -282,26 +276,24 @@ objects:
             valueFrom:
               secretKeyRef:
                 name: sqlup-credential
-                key: MYSQL_HOST
+                key: SQLUP_HOST
           - name: SQLUP_DB
             valueFrom:
               secretKeyRef:
                 name: sqlup-credential
-                key: MYSQL_DB
-          terminationMessagePath: "/master/termination-log"
+                key: MYSQL_DATABASE
           resources:
             requests:
               memory: "${MEMORY_LIMIT}"
               cpu: 0.1
             limits:
               memory: "${MEMORY_LIMIT}"
+          terminationMessagePath: "/master/termination-log"
           imagePullPolicy: Always
-        terminationGracePeriodSeconds: 60
+        activeDeadlineSeconds: 600
+        restartPolicy: Always
+        terminationGracePeriodSeconds: 30
         dnsPolicy: ClusterFirst
-  status:
-    replicas: 1
-    updatedReplicas: 1
-    availableReplicas: 1
 - kind: Service
   apiVersion: v1
   metadata:
@@ -364,29 +356,6 @@ parameters:
   description: database password to use
   generate: expression
   from: "[a-zA-Z0-9]{16}"
-  required: true
-- name: SQLUP_CONF
-  displayName: Configuration object (injected into the configMap)
-  description: Json object string describing the application. see in https://github.com/startx/sqlup/blob/master/docs/guides/2.Configure.md
-  value: >-
-    {
-        "name": "sqlup-dev",
-        "version": "0.0.2",
-        "path": "{{{DATA_PATH}}}",
-        "waitStartup": 20,
-        "server": {
-            "type": "mysql",
-            "host": "{{{SQLUP_HOST}}}",
-            "port": "3306",
-            "user": "root",
-            "password": "{{{SQLUP_PWD}}}",
-            "database": "{{{SQLUP_DB}}}"
-        },
-        "sequence": {
-            "0.0.0": "v0.0.0.sql",
-            "0.0.1": "v0.0.1.sql"
-        }
-    }
   required: true
 - name: MEMORY_LIMIT
   displayName: Memory Limit for data nodes

@@ -22,15 +22,7 @@ objects:
       template: sqlup-configmap-template
   spec:
     strategy:
-      type: Rolling
-      rollingParams:
-        updatePeriodSeconds: 1
-        intervalSeconds: 1
-        timeoutSeconds: 60
-        maxUnavailable: 25%
-        maxSurge: 25%
-      resources: {}
-      activeDeadlineSeconds: 600
+      type: Recreate
     triggers:
       - type: ConfigChange
     replicas: 1
