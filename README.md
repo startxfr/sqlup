@@ -1,18 +1,15 @@
-[![sqlup](https://raw.githubusercontent.com/startxfr/sqlup/master/docs/assets/logo.svg?sanitize=true)](https://github.com/startxfr/sqlup)
-
-# sqlup project ![sqlup](https://img.shields.io/badge/latest-v0.0.9-blue.svg)
+# [![sqlup](https://raw.githubusercontent.com/startxfr/sqlup/master/docs/assets/logo.svg?sanitize=true)](https://github.com/startxfr/sqlup)
 
 **sqlup** for **sql** **up**grade is an an open-source job container who apply sql patch to a database following a sequentially versionned plan.
-
 Very light (application less than 100Ko, full container stack for less than 30Mo) application configured with a single json file, to deploy and follow update lifecycle of a database stored in mysql, posgresql or dynamodb backend.
 
-[![Build Status](https://travis-ci.org/startxfr/sqlup.svg?branch=master)](https://travis-ci.org/startxfr/sqlup) [![docker build](https://img.shields.io/docker/build/startx/sqlup.svg)](https://hub.docker.com/r/startx/sqlup/) [![npm version](https://badge.fury.io/js/sqlup.svg)](https://www.npmjs.com/package/sqlup) [![npm dependencies](https://david-dm.org/startxfr/sqlup.svg)](https://www.npmjs.com/package/sqlup) [![last commit](https://img.shields.io/github/last-commit/startxfr/sqlup.svg)](https://github.com/startxfr/sqlup) [![licence](https://img.shields.io/github/license/startxfr/sqlup.svg)](https://github.com/startxfr/sqlup) 
+[![Build Status](https://travis-ci.org/startxfr/sqlup.svg?branch=master)](https://travis-ci.org/startxfr/sqlup) [![npm dependencies](https://david-dm.org/startxfr/sqlup.svg)](https://www.npmjs.com/package/sqlup) [![last commit](https://img.shields.io/github/last-commit/startxfr/sqlup.svg)](https://github.com/startxfr/sqlup) [![licence](https://img.shields.io/github/license/startxfr/sqlup.svg)](https://github.com/startxfr/sqlup) 
 
 ## Getting Started
 
-- [container image](https://hub.docker.com/r/startx/sqlup) published in dockerhub public registry. The simplest and fastest way to execute a sqlup job is to use the public docker image. For more information on how to run your first sqlup job using sqlup docker image, please read the [docker image user guide](https://github.com/startxfr/sqlup/tree/master/docs/guides/USE_docker.md)
-- [npm module](https://www.npmjs.com/package/sqlup) published in npm public database. If you plan to sqlup into another application, you should be more interested by the npm method. For more information on how to run your first sqlup job using sqlup npm module, please read the [npm module user guide](https://github.com/startxfr/sqlup/tree/master/docs/guides/USE_npm.md)
-- [source code](https://github.com/startxfr/sqlup/tree/dev) published in github. If you plan to extend sqlup capabilities with your own component, change default software design, extend core functinalities or more globaly improve this application, please read the [source code user guide](https://github.com/startxfr/sqlup/tree/master/docs/guides/USE_source.md)
+- [![docker build](https://img.shields.io/docker/build/startx/sqlup.svg)](https://hub.docker.com/r/startx/sqlup/) [container image](https://hub.docker.com/r/startx/sqlup) published in dockerhub public registry. The simplest and fastest way to execute a sqlup job is to use the public docker image. For more information on how to run your first sqlup job using sqlup docker image, please read the [docker image user guide](https://github.com/startxfr/sqlup/tree/master/docs/guides/USE_docker.md)
+- [![npm version](https://badge.fury.io/js/sqlup.svg)](https://www.npmjs.com/package/sqlup) [npm module](https://www.npmjs.com/package/sqlup) published in npm public database. If you plan to sqlup into another application, you should be more interested by the npm method. For more information on how to run your first sqlup job using sqlup npm module, please read the [npm module user guide](https://github.com/startxfr/sqlup/tree/master/docs/guides/USE_npm.md)
+- [![sqlup](https://img.shields.io/badge/latest-v0.0.9-blue.svg)](https://github.com/startxfr/sqlup) [source code](https://github.com/startxfr/sqlup/tree/dev) published in github. If you plan to extend sqlup capabilities with your own component, change default software design, extend core functinalities or more globaly improve this application, please read the [source code user guide](https://github.com/startxfr/sqlup/tree/master/docs/guides/USE_source.md)
 
 ## Want to try ?
 
