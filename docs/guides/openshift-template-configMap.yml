@@ -3,9 +3,13 @@ kind: Template
 metadata:
   name: sqlup-configmap-template
   annotations:
-    description: Template for creating an SQLUP job with configuration stored in a configMap object
+    description: Template for creating an empty mariadb database and use SQLUP job with configuration 
+      and sql patch from an embed example to populate structure and data using configMap and secret.
     iconClass: icon-mysql-database
     tags: sqlup,nodejs,startx,job,sql
+    openshift.io/provider-display-name: STARTX
+    openshift.io/documentation-url: https://github.com/startxfr/sqlup/blob/master/README.md
+    openshift.io/support-url: https://github.com/startxfr/sqlup/issues/new
 objects:
 - kind: DeploymentConfig
   apiVersion: v1
