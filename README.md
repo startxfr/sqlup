@@ -4,8 +4,7 @@
 
 **sqlup** for **sql** **up**grade is an an open-source job container who apply sql patch to a database following a sequentially versionned plan.
 
-Very light (application less than 100Ko, full container stack for less than 30Mo) and configured with a single json file, 
-you deploy and follow update lifecycle of database stored in mysql, posgresql or dynamodb backend.
+Very light (application less than 100Ko, full container stack for less than 30Mo) and configured with a single json file, you deploy and follow update lifecycle of database stored in mysql, posgresql or dynamodb backend.
 
 [![Build Status](https://travis-ci.org/startxfr/sqlup.svg?branch=master)](https://travis-ci.org/startxfr/sqlup) 
 [![docker build](https://img.shields.io/docker/build/startx/sqlup.svg)](https://hub.docker.com/r/startx/sqlup/) 
@@ -16,12 +15,9 @@ you deploy and follow update lifecycle of database stored in mysql, posgresql or
 
 ## Getting Started
 
-- [container image](https://hub.docker.com/r/startx/sqlup) published in dockerhub public registry
-The simplest and fastest way to execute a sqlup job is to use the public docker image. For more information on how to run your first sqlup job using sqlup docker image, please read the [docker image user guide](https://github.com/startxfr/sqlup/tree/master/docs/guides/USE_docker.md)
-- [npm module](https://www.npmjs.com/package/sqlup) published in npm public database
-If you plan to sqlup into another application, you should be more interested by the npm method. For more information on how to run your first sqlup job using sqlup npm module, please read the [npm module user guide](https://github.com/startxfr/sqlup/tree/master/docs/guides/USE_npm.md)
-- [source code](https://github.com/startxfr/sqlup/tree/dev) published in github
-If you plan to extend sqlup capabilities with your own component, change default software design, extend core functinalities or more globaly improve this application, please read the [source code user guide](https://github.com/startxfr/sqlup/tree/master/docs/guides/USE_source.md)
+- [container image](https://hub.docker.com/r/startx/sqlup) published in dockerhub public registry. The simplest and fastest way to execute a sqlup job is to use the public docker image. For more information on how to run your first sqlup job using sqlup docker image, please read the [docker image user guide](https://github.com/startxfr/sqlup/tree/master/docs/guides/USE_docker.md)
+- [npm module](https://www.npmjs.com/package/sqlup) published in npm public database. If you plan to sqlup into another application, you should be more interested by the npm method. For more information on how to run your first sqlup job using sqlup npm module, please read the [npm module user guide](https://github.com/startxfr/sqlup/tree/master/docs/guides/USE_npm.md)
+- [source code](https://github.com/startxfr/sqlup/tree/dev) published in github. If you plan to extend sqlup capabilities with your own component, change default software design, extend core functinalities or more globaly improve this application, please read the [source code user guide](https://github.com/startxfr/sqlup/tree/master/docs/guides/USE_source.md)
 
 ## Want to try ?
 
