@@ -6,12 +6,7 @@
 
 Very light (application less than 100Ko, full container stack for less than 30Mo) and configured with a single json file, you deploy and follow update lifecycle of database stored in mysql, posgresql or dynamodb backend.
 
-[![Build Status](https://travis-ci.org/startxfr/sqlup.svg?branch=master)](https://travis-ci.org/startxfr/sqlup) 
-[![docker build](https://img.shields.io/docker/build/startx/sqlup.svg)](https://hub.docker.com/r/startx/sqlup/) 
-[![npm version](https://badge.fury.io/js/sqlup.svg)](https://www.npmjs.com/package/sqlup) 
-[![npm dependencies](https://david-dm.org/startxfr/sqlup.svg)](https://www.npmjs.com/package/sqlup) 
-[![last commit](https://img.shields.io/github/last-commit/startxfr/sqlup.svg)](https://github.com/startxfr/sqlup) 
-[![licence](https://img.shields.io/github/license/startxfr/sqlup.svg)](https://github.com/startxfr/sqlup) 
+[![Build Status](https://travis-ci.org/startxfr/sqlup.svg?branch=master)](https://travis-ci.org/startxfr/sqlup) [![docker build](https://img.shields.io/docker/build/startx/sqlup.svg)](https://hub.docker.com/r/startx/sqlup/) [![npm version](https://badge.fury.io/js/sqlup.svg)](https://www.npmjs.com/package/sqlup) [![npm dependencies](https://david-dm.org/startxfr/sqlup.svg)](https://www.npmjs.com/package/sqlup) [![last commit](https://img.shields.io/github/last-commit/startxfr/sqlup.svg)](https://github.com/startxfr/sqlup) [![licence](https://img.shields.io/github/license/startxfr/sqlup.svg)](https://github.com/startxfr/sqlup) 
 
 ## Getting Started
 
