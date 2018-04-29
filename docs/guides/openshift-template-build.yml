@@ -231,6 +231,10 @@ objects:
   spec:
     strategy:
       type: Recreate
+    recreateParams:
+      TimeoutSeconds: 60
+      maxUnavailable: 1
+      maxSurge : 1
     triggers:
     - type: ImageChange
       imageChangeParams:
