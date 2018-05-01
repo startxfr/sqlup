@@ -326,7 +326,7 @@ parameters:
   required: true
 - name: SQLUP_VERSION
   displayName: SQLUP release
-  description:  SQLUP version to use in this application. Choose in latest, testing, stable, 0.0.7, 0.1.0
+  description:  SQLUP version to use in this application. Choose in latest, testing, stable, 0.0.7, 0.1.1
   value: latest
   required: true
 - name: MYSQL_VERSION
