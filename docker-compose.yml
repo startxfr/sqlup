@@ -55,7 +55,7 @@ db-postgres:
     POSTGRES_PASSWORD: hguyFtgfR4r9R4r76
 
 db-mariadb:
-  image: mariadb:5.5
+  image: mariadb:10.3.6
   container_name: "sqlup-dev-db-mariadb"
   mem_limit: 2g
   memswap_limit: 3g
