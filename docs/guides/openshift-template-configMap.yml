@@ -45,7 +45,7 @@ objects:
             emptyDir: {}
         containers:
           - name: mysql
-            image: "mysql:5.5"
+            image: " "
             ports:
               - name: mysql
                 containerPort: 3306
@@ -178,7 +178,7 @@ objects:
                 path: v0.0.1.sql
 parameters:
 - name: IMAGE_NAME
-  description: SQLUP release to use (available are latest, testing, stable or 0.1.0)
+  description: SQLUP release to use (available are latest, testing, stable or 0.1.1)
   value: latest
   required: true
 - name: DB_HOST
