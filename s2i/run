@@ -24,4 +24,4 @@ cat << "EOF"
 
 EOF
 cd $APP_PATH
-exec npm start
+/bin/sx-nodejs run
