@@ -13,7 +13,7 @@ services:
 before_install:
 - 'echo "{ \"experimental\": true, \"storage-driver\": \"overlay2\", \"max-concurrent-downloads\":50,\"max-concurrent-uploads\": 50 }" | sudo tee /etc/docker/daemon.json'
 - sudo service docker restart
-- docker pull node:8-alpine
+- docker pull startx/sv-nodejs:alpine3
 - docker images
 - docker login -u $DOCKER_USER -p $DOCKER_PASS
 - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; elif [ "$TRAVIS_BRANCH"  == "test" ]; then echo "testing"; elif [ "$TRAVIS_BRANCH"  == "docker" ]; then echo "stable"; else echo $TRAVIS_BRANCH ; fi`

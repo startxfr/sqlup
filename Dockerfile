@@ -9,7 +9,7 @@ ENV SQLUP_VERSION=0.1.2 \
     DESCRIPTION="SQLUP $SQLUP_VERSION will help you create, initialize and apply an update strategy to your database containers" \
     NODE_ENV=development \
     CONF_PATH=/sqlup \
-    DATA_PATH=/sqlup \
+    DATA_PATH=/sqlup
 
 LABEL name="startx/sqlup-$SQLUP_VERSION" \
       summary="$SX_SUMMARY" \
