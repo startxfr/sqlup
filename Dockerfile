@@ -1,7 +1,7 @@
 FROM startx/sv-nodejs:alpine3
 MAINTAINER STARTX "dev@startx.fr"
 
-ENV SQLUP_VERSION=0.1.4 \
+ENV SQLUP_VERSION=0.1.5 \
     SX_ID="startx/sqlup" \
     SX_SERVICE="sqlup" \
     SX_NAME="Startx SQLUP (alpine)" \
@@ -49,7 +49,5 @@ RUN  apk update && apk upgrade \
 USER 1001
 
 WORKDIR $APP_PATH
-
-VOLUME $DATA_PATH
 
 CMD [ "npm" , "start" ]
