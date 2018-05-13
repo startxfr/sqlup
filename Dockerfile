@@ -1,4 +1,4 @@
-FROM startx/sv-nodejs:alpine
+FROM startx/sv-nodejs:alpine3
 MAINTAINER STARTX "dev@startx.fr"
 
 ENV SQLUP_VERSION=0.1.2 \
