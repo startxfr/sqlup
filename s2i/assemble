@@ -8,20 +8,20 @@
 #
 
 cat << "EOF"
-              _                 
-             (_ )               
- ____   __ _  | |  _   _  ____  
-/ ___) / _` ) | | ( ) ( )(  _ \ 
-\__  \( (_) | | | | (_) || (_) )
-(____/ \___ |(___) \___/ | ___/ 
-          | |            | |    
-          (_)            (_)    
-  __  ____ ____ ____ _  _ ____ __   ____ 
- / _\/ ___) ___|  __| \/ |  _ (  ) (  __)
-/    \___ \___ \) _)/ \/ \) _ ( (_/\) _| 
-\_/\_(____(____(____)_)(_(____|____(____) 
-
-
+|                _                 
+|               (_ )               
+|   ____   __ _  | |  _   _  ____  
+|  / ___) / _` ) | | ( ) ( )(  _ \ 
+|  \__  \( (_) | | | | (_) || (_) )
+|  (____/ \___ |(___) \___/ | ___/ 
+|            | |            | |    
+|            (_)            (_)    
+|    __  ____ ____ ____ _  _ ____ __   ____ 
+|   / _\/ ___) ___|  __| \/ |  _ (  ) (  __)
+|  /    \___ \___ \) _)/ \/ \) _ ( (_/\) _| 
+|  \_/\_(____(____(____)_)(_(____|____(____) 
+|  
+|  
 EOF
 if [[ -f /tmp/src/sqlup.json ]]; then
     echo "Found sqlup configuration in /tmp/src/sqlup.json"
@@ -38,6 +38,9 @@ if [[ -f $APP_PATH/sqlup.json ]]; then
     cp -f $APP_PATH/sqlup.json $CONF_PATH/sqlup.json
     echo "Copy sqlup configuration to $CONF_PATH/sqlup.json"
 fi;
+cp -f $APP_PATH/sqlup.json $CONF_PATH/sqlup.json
+echo "Copy SQL scripts into $DATA_PATH/"
+cp -R $S2I_DEST/* $DATA_PATH/
 /bin/sx-nodejs assemble
 cd $APP_PATH
 npm install -production
