@@ -165,7 +165,7 @@ $app = {
       catch (e) {
         $log.error("Cfg source   : is missing");
         $log.debug("sqlup configuration could not be found");
-        $log.debug("add environment variable SQLUP_CONF or create /conf/sqlup.json config file");
+        $log.debug("add environment variable SQLUP_CONF or create " + this.config.conf_path + "/sqlup.json config file");
         this.fatalError('configuration file or variable is missing');
       }
     }
