@@ -7,13 +7,32 @@
 #  https://github.com/openshift/source-to-image/blob/master/docs/builder_image.md
 #
 
+cat << "EOF"
+              _                 
+             (_ )               
+ ____   __ _  | |  _   _  ____  
+/ ___) / _` ) | | ( ) ( )(  _ \ 
+\__  \( (_) | | | | (_) || (_) )
+(____/ \___ |(___) \___/ | ___/ 
+          | |            | |    
+          (_)            (_)    
+  __  ____ ____ ____ _  _ ____ __   ____ 
+ / _\/ ___) ___|  __| \/ |  _ (  ) (  __)
+/    \___ \___ \) _)/ \/ \) _ ( (_/\) _| 
+\_/\_(____(____(____)_)(_(____|____(____) 
+
+
+EOF
+/bin/sx-nodejs assemble
 cd $APP_PATH
-if [[ -d /tmp/src ]]; then
-    cp -R /tmp/src/* $DATA_PATH/
-    if [[ -f /tmp/src/sqlup.json ]]; then
-        cp -f /tmp/src/sqlup.json $CONF_PATH/sqlup.json
-    fi;
-    rm -rf /tmp/src
+if [[ -f /tmp/src/sqlup.json ]]; then
+    cp -f /tmp/src/sqlup.json $CONF_PATH/sqlup.json
+fi;
+if [[ -f /tmp/sqlup.json ]]; then
+    cp -f /tmp/sqlup.json $CONF_PATH/sqlup.json
+fi;
+if [[ -f $APP_PATH/sqlup.json ]]; then
+    cp -f $APP_PATH/sqlup.json $CONF_PATH/sqlup.json
 fi;
 npm install -production
 npm dedupe
