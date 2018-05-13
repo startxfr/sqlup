@@ -38,9 +38,10 @@ if [[ -f $APP_PATH/sqlup.json ]]; then
     cp -f $APP_PATH/sqlup.json $CONF_PATH/sqlup.json
     echo "Copy sqlup configuration to $CONF_PATH/sqlup.json"
 fi;
-cp -f $APP_PATH/sqlup.json $CONF_PATH/sqlup.json
-echo "Copy SQL scripts into $DATA_PATH/"
-cp -R $S2I_DEST/* $DATA_PATH/
+if [[ -d $S2I_DEST ]]; then
+  echo "Copy SQL scripts into $DATA_PATH/"
+  cp -R $S2I_DEST/*.sql $DATA_PATH/
+fi;
 /bin/sx-nodejs assemble
 cd $APP_PATH
 npm install -production
