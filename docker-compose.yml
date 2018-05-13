@@ -1,3 +1,5 @@
 app:
   container_name: "sqlup"
   build: .
+  environment:
+  - SX_DEBUG=true
