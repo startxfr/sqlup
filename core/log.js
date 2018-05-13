@@ -8,6 +8,7 @@
  * @type $log
  */
 var $log = {
+  config: {},
   isDebug: false,
   /**
    * Initialise log according to the log section in sqlup.json. 

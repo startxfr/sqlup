@@ -34,6 +34,7 @@ COPY ./test $APP_PATH/test
 COPY ./app.js $APP_PATH/app.js
 COPY ./package.json $APP_PATH/package.json
 
+USER root
 RUN  apk update && apk upgrade \
  &&  mkdir -p $APP_PATH $CONF_PATH $DATA_PATH /.npm /.config \
  &&  cd $APP_PATH \
