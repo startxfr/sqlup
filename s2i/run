@@ -7,5 +7,21 @@
 #  https://github.com/openshift/source-to-image/blob/master/docs/builder_image.md
 #
 
+cat << "EOF"
+              _                 
+             (_ )               
+ ____   __ _  | |  _   _  ____  
+/ ___) / _` ) | | ( ) ( )(  _ \ 
+\__  \( (_) | | | | (_) || (_) )
+(____/ \___ |(___) \___/ | ___/ 
+          | |            | |    
+          (_)            (_)    
+ ____  _  _ __ _ 
+(  _ \/ )( (  ( \ 
+ )   /) \/ (    /
+(__\_)\____|_)__)
+
+
+EOF
 cd $APP_PATH
 exec npm start
