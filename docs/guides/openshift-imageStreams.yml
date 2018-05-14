@@ -53,19 +53,19 @@ items:
       from:
         kind: DockerImage
         name: startx/sqlup:testing
-    - name: 0.1.8
+    - name: 0.1.9
       annotations:
-        openshift.io/display-name: SQLUP Database Upgrader (v0.1.8)
+        openshift.io/display-name: SQLUP Database Upgrader (v0.1.9)
         openshift.io/generated-by: STARTX
-        description: Build your sql files into an SQLUP container to create and/or upgrade database structure (v0.1.8)
+        description: Build your sql files into an SQLUP container to create and/or upgrade database structure (v0.1.9)
         iconClass: icon-mysql-database
-        tags: builder,startx,alpine,nodejs,sql,sqlup,sqlup-v0.1.8
+        tags: builder,startx,alpine,nodejs,sql,sqlup,sqlup-v0.1.9
         supports: mysql
-        version: 0.1.8
+        version: 0.1.9
         sampleRepo: https://github.com/startxfr/sqlup-example.git
       from:
         kind: DockerImage
-        name: startx/sqlup:0.1.8
+        name: startx/sqlup:0.1.9
     - name: 0.1.1
       annotations:
         openshift.io/display-name: SQLUP Database Upgrader (v0.1.1)
