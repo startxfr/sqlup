@@ -1,7 +1,7 @@
 FROM startx/sv-nodejs:alpine3
 MAINTAINER STARTX "dev@startx.fr"
 
-ENV SQLUP_VERSION=0.1.8 \
+ENV SQLUP_VERSION=0.1.9 \
     SX_ID="startx/sqlup" \
     SX_SERVICE="sqlup" \
     SX_NAME="Startx SQLUP (alpine)" \
@@ -28,7 +28,7 @@ LABEL name="startx/sqlup-$SQLUP_VERSION" \
       io.openshift.s2i.scripts-url="image:///s2i" \
       fr.startx.component="$SX_ID:$SQLUP_VERSION"
 
-COPY ./s2i /s2i
+COPY ./s2i $APP_PATH/.sx
 COPY ./core $APP_PATH/core
 COPY ./test $APP_PATH/test
 COPY ./app.js $APP_PATH/app.js
@@ -42,12 +42,13 @@ RUN  apk update && apk upgrade \
  &&  npm dedupe \
  &&  npm cache verify \
  &&  npm cache clean --force \
- &&  chgrp -R 0 $APP_PATH $CONF_PATH $DATA_PATH /s2i /.npm /.config \
- &&  chown -R 1001:0 $APP_PATH $CONF_PATH $DATA_PATH /s2i /.npm /.config \
- &&  chmod -R g=u $APP_PATH $CONF_PATH $DATA_PATH /s2i /.npm /.config
+ &&  chgrp -R 0 $APP_PATH $CONF_PATH $DATA_PATH /.npm /.config \
+ &&  chown -R 1001:0 $APP_PATH $CONF_PATH $DATA_PATH /.npm /.config \
+ &&  chmod -R g=u $APP_PATH $CONF_PATH $DATA_PATH /.npm /.config \
+ &&  /bin/sx-nodejs assemble
 
 USER 1001
 
 WORKDIR $APP_PATH
 
-CMD [ "npm" , "start" ]
+CMD [ "/bin/sx-nodejs" , "run" ]
