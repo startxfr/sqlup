@@ -1,6 +1,6 @@
 {
   "name": "sqlup",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "short lived application (job) for updating SQL database schema following a versionned plan",
   "author": "STARTX <dev+sqlup@startx.fr>",
   "homepage": "https://github.com/startxfr/sqlup",
