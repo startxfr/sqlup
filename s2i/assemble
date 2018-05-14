@@ -46,7 +46,6 @@ if [[ -d $DIRFROM ]]; then
   echo "Copy SQL scripts into $DATA_PATH/"
   cp -f -R $DIRFROM/* $DATA_PATH/
 fi;
-/bin/sx-nodejs assemble
 cd $APP_PATH
 npm install -production
 npm dedupe
