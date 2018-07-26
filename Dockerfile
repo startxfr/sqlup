@@ -28,7 +28,7 @@ LABEL name="startx/sqlup-$SQLUP_VERSION" \
       io.openshift.s2i.scripts-url="image:///s2i" \
       fr.startx.component="$SX_ID:$SQLUP_VERSION"
 
-COPY ./s2i $APP_PATH/.sx
+COPY ./s2i /s2i
 COPY ./core $APP_PATH/core
 COPY ./test $APP_PATH/test
 COPY ./app.js $APP_PATH/app.js
@@ -49,6 +49,6 @@ RUN  apk update && apk upgrade \
 
 USER 1001
 
-WORKDIR $APP_PATH
+WORKDIR $DATA_PATH
 
-CMD [ "/bin/sx-nodejs" , "run" ]
+CMD [ "/s2i/usage" ]
