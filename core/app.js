@@ -43,6 +43,7 @@ $app = {
     this._initProcessSignals();
     this._initCheckEnv();
     this._initLoadConfigFiles();
+    this._initCheckConfig();
     $log.debug("App path     : " + this.config.app_path);
     $log.debug("Lib path     : " + this.config.lib_path);
     $log.debug("Data path    : " + ((this.config.data_path) ? this.config.data_path : "NONE"));
@@ -144,6 +145,135 @@ $app = {
     var mg = require('merge');
     var pkg_file = this.config.app_path + '/package.json';
     var cfg_file = this.config.conf_path + '/sqlup.json';
+    try {
+      mg.recursive($app.package, JSON.parse(fs.readFileSync(pkg_file, 'utf-8')));
+      $log.debug("Pkg source   : " + this.config.app_path + '/package.json');
+    }
+    catch (e) {
+      this.fatalError("package file " + pkg_file + " is missing");
+    }
+    if (process.env.SQLUP_CONF) {
+      $app.tmpMsgCfgload = "Configuration loaded from SQLUP_CONF environment variable";
+      $log.debug("Cfg source   : SQLUP_CONF environment variable");
+      mg.recursive($app.config, JSON.parse(process.env.SQLUP_CONF));
+    }
+    else {
+      try {
+        $app.tmpMsgCfgload = "Configuration loaded from " + cfg_file;
+        mg.recursive($app.config, JSON.parse(fs.readFileSync(cfg_file, 'utf-8')));
+        $log.debug("Cfg source   : " + cfg_file);
+      }
+      catch (e) {
+        $log.error("Cfg source   : is missing");
+        $log.debug("sqlup configuration could not be found");
+        $log.debug("add environment variable SQLUP_CONF or create " + cfg_file + " config file");
+        this.fatalError('configuration file or variable is missing');
+      }
+    }
+    if ($app.config && $app.config.disableSmartConf === true) {
+      if ($app.config && $app.config.name) {
+        $app.config.name = $log.format($app.config.name, process.env);
+      }
+      if ($app.config && $app.config.version) {
+        $app.config.version = $log.format($app.config.version, process.env);
+      }
+    }
+    else {
+      $log.formatRecursive($app.config, process.env, {bot: null, server: null});
+    }
+    if (!$app.config.name) {
+      this.fatalError('sqlup configuration must have a "name" property');
+    }
+    if (!$app.config.name) {
+      this.fatalError('sqlup configuration must have a "name" property');
+    }
+    if (!$app.config.version) {
+      this.fatalError('sqlup configuration must have a "version" property');
+    }
+    $app.config.appsign = $app.config.log.appsign = $app.config.name + '::' + $app.config.version + '::' + $app.config.ip;
+    $app.config.log.apptype = $app.config.name + '-v' + $app.config.version;
+    process.env.npm_config_user_agent += " (" + $app.package.name + ' v' + $app.package.version + ")";
+    return this;
+  },
+  /**
+   * Check if loaded configuration is valid
+   * @returns {$app}
+   */
+  _initCheckConfig: function () {
+    $log.debug("start checking configuration as part of the init process", $timer.time('app'));
+    if ($app.config.name === undefined || $app.config.name === "") {
+      this.fatalError("'name' key is missing in configuration");
+    }
+    else {
+        $log.debug("'name' is set to " +$app.config.name);
+    }
+    if ($app.config.path === undefined || $app.config.path === "") {
+      this.fatalError("'path' key is missing in configuration");
+    }
+    else {
+        $log.debug("'path' is set to " +$app.config.path);
+    }
+    if ($app.config.version === undefined || $app.config.version === "") {
+      this.fatalError("'version' key is missing in configuration");
+    }
+    else {
+        $log.debug("'version' is set to " +$app.config.version);
+    }
+    if ($app.config.server === undefined) {
+      this.fatalError("'server' key is missing in configuration");
+    }
+    else {
+      $log.debug("'server' key is set");
+      switch ($app.config.server.type) {
+        case "mysql" :
+        case "posgresql" :
+        case "dynamodb" :
+          $log.debug("'server.type' is set to " +$app.config.server.type);
+          break;
+        default:
+          this.fatalError("'server.type' must be one of mysql,posgresql or dynamodb");
+      }
+      if ($app.config.server.host === undefined || $app.config.server.host === "") {
+        this.fatalError("'server.host' key is missing in configuration");
+      }
+      else {
+          $log.debug("'server.host' is set to " +$app.config.server.host);
+      }
+      if ($app.config.server.database === undefined || $app.config.server.database === "") {
+        this.fatalError("'server.database' key is missing in configuration");
+      }
+      else {
+          $log.debug("'server.database' is set to " +$app.config.server.database);
+      }
+      if ($app.config.server.user === undefined || $app.config.server.user === "") {
+        this.fatalError("'server.user' key is missing in configuration");
+      }
+      else {
+          $log.debug("'server.user' is set to " +$app.config.server.user);
+      }
+      if ($app.config.server.password === undefined || $app.config.server.password === "") {
+        this.fatalError("'server.password' key is missing in configuration");
+      }
+      else {
+          $log.debug("'server.password' is set to " +$app.config.server.password);
+      }
+    }
+    if ($app.config.sequence === undefined) {
+      this.fatalError("'sequence' key is missing in configuration");
+    }
+    else {
+        $log.debug("'sequence' key is set");
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     try {
       mg.recursive($app.package, JSON.parse(fs.readFileSync(pkg_file, 'utf-8')));
       $log.debug("Pkg source   : " + this.config.app_path + '/package.json');
