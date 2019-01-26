@@ -22,13 +22,7 @@ cat << "EOF"
 |  \____/(____/\_/\_/\___(____)
 |  
 |  
-EOF
-echoNotVerbose "container $HOSTNAME executing Nodejs USAGE"
-echoVerbose "+====================================================="
-echoVerbose "| Container $HOSTNAME executing Nodejs USAGE"
-echoVerbose "| "
-nodejsInformation "| "
-echoDebug `env`
-echoVerbose "+====================================================="
-genericUsage
+
+
+/bin/sx-nodejs usageS2i
 exit 0;
