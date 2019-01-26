@@ -20,7 +20,7 @@ $app = {
     ip: require("ip").address(),
     log: {},
     waitStartup: 20,
-    path: "{{{DATA_PATH}}}",
+    path: "{{DATA_PATH}}",
     server: {
       type: "mysql",
       host: "localhost",
@@ -181,15 +181,6 @@ $app = {
     else {
       $log.formatRecursive($app.config, process.env, {bot: null, server: null});
     }
-    if (!$app.config.name) {
-      this.fatalError('sqlup configuration must have a "name" property');
-    }
-    if (!$app.config.name) {
-      this.fatalError('sqlup configuration must have a "name" property');
-    }
-    if (!$app.config.version) {
-      this.fatalError('sqlup configuration must have a "version" property');
-    }
     $app.config.appsign = $app.config.log.appsign = $app.config.name + '::' + $app.config.version + '::' + $app.config.ip;
     $app.config.log.apptype = $app.config.name + '-v' + $app.config.version;
     process.env.npm_config_user_agent += " (" + $app.package.name + ' v' + $app.package.version + ")";
@@ -219,11 +210,20 @@ $app = {
     else {
         $log.debug("'version' is set to " +$app.config.version);
     }
+    if (!$app.config.name) {
+      this.fatalError('sqlup configuration must have a "name" property');
+    }
+    if (!$app.config.name) {
+      this.fatalError('sqlup configuration must have a "name" property');
+    }
+    if (!$app.config.version) {
+      this.fatalError('sqlup configuration must have a "version" property');
+    }
     if ($app.config.server === undefined) {
       this.fatalError("'server' key is missing in configuration");
     }
     else {
-      $log.debug("'server' key is set");
+      $log.debug("'server' key is defined");
       switch ($app.config.server.type) {
         case "mysql" :
         case "posgresql" :
@@ -262,66 +262,8 @@ $app = {
       this.fatalError("'sequence' key is missing in configuration");
     }
     else {
-        $log.debug("'sequence' key is set");
+        $log.debug("'sequence' key is defined");
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    try {
-      mg.recursive($app.package, JSON.parse(fs.readFileSync(pkg_file, 'utf-8')));
-      $log.debug("Pkg source   : " + this.config.app_path + '/package.json');
-    }
-    catch (e) {
-      this.fatalError("package file " + pkg_file + " is missing");
-    }
-    if (process.env.SQLUP_CONF) {
-      $app.tmpMsgCfgload = "Configuration loaded from SQLUP_CONF environment variable";
-      $log.debug("Cfg source   : SQLUP_CONF environment variable");
-      mg.recursive($app.config, JSON.parse(process.env.SQLUP_CONF));
-    }
-    else {
-      try {
-        $app.tmpMsgCfgload = "Configuration loaded from " + cfg_file;
-        mg.recursive($app.config, JSON.parse(fs.readFileSync(cfg_file, 'utf-8')));
-        $log.debug("Cfg source   : " + cfg_file);
-      }
-      catch (e) {
-        $log.error("Cfg source   : is missing");
-        $log.debug("sqlup configuration could not be found");
-        $log.debug("add environment variable SQLUP_CONF or create " + cfg_file + " config file");
-        this.fatalError('configuration file or variable is missing');
-      }
-    }
-    if ($app.config && $app.config.disableSmartConf === true) {
-      if ($app.config && $app.config.name) {
-        $app.config.name = $log.format($app.config.name, process.env);
-      }
-      if ($app.config && $app.config.version) {
-        $app.config.version = $log.format($app.config.version, process.env);
-      }
-    }
-    else {
-      $log.formatRecursive($app.config, process.env, {bot: null, server: null});
-    }
-    if (!$app.config.name) {
-      this.fatalError('sqlup configuration must have a "name" property');
-    }
-    if (!$app.config.name) {
-      this.fatalError('sqlup configuration must have a "name" property');
-    }
-    if (!$app.config.version) {
-      this.fatalError('sqlup configuration must have a "version" property');
-    }
-    $app.config.appsign = $app.config.log.appsign = $app.config.name + '::' + $app.config.version + '::' + $app.config.ip;
-    $app.config.log.apptype = $app.config.name + '-v' + $app.config.version;
-    process.env.npm_config_user_agent += " (" + $app.package.name + ' v' + $app.package.version + ")";
     return this;
   },
   /**
