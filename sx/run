@@ -1,0 +1,34 @@
+#!/bin/sh -e
+#
+# S2I run script
+# The 'run' script is the entrypoint of your application
+#
+# For more information refer to the documentation:
+#  https://github.com/openshift/source-to-image/blob/master/docs/builder_image.md
+#
+
+cat << "EOF"
+|                _                 
+|               (_ )               
+|   ____   __ _  | |  _   _  ____  
+|  / ___) / _` ) | | ( ) ( )(  _ \ 
+|  \__  \( (_) | | | | (_) || (_) )
+|  (____/ \___ |(___) \___/ | ___/ 
+|            | |            | |    
+|            (_)            (_)    
+|   ____  _  _ __ _ 
+|  (  _ \/ )( (  ( \ 
+|   )   /) \/ (    /
+|  (__\_)\____|_)__)
+|  
+|  
+EOF
+echoNotVerbose "container $HOSTNAME executing Nodejs RUN"
+echoVerbose "+====================================================="
+echoVerbose "| Container $HOSTNAME executing Nodejs RUN"
+echoVerbose "| "
+nodejsInformation "| "
+echoDebug `env`
+echoVerbose "+====================================================="
+cd $APP_PATH
+doNodejsRun
