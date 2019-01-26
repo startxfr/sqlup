@@ -23,5 +23,12 @@ cat << "EOF"
 |  
 |  
 EOF
+echoNotVerbose "container $HOSTNAME executing Nodejs RUN"
+echoVerbose "+====================================================="
+echoVerbose "| Container $HOSTNAME executing Nodejs RUN"
+echoVerbose "| "
+nodejsInformation "| "
+echoDebug `env`
+echoVerbose "+====================================================="
 cd $APP_PATH
-npm start
+doNodejsRun
