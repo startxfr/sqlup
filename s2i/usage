@@ -23,17 +23,6 @@ cat << "EOF"
 |  
 |  
 
-SQLUP usage
 
-Usage:
-  docker run $SX_ID npm [command]
-
-- General Commands:
-  start            start nodejs main application
-  version          give the version of the npm environement
-  dev:env          give a list of environemnt variables
-  test             start a test serie
-  test:start       start a test serie and start job if test success
-
-EOF
+/bin/sx-nodejs usageS2i
 exit 0;

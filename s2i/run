@@ -23,5 +23,6 @@ cat << "EOF"
 |  
 |  
 EOF
-cd $APP_PATH
-npm start
+
+/bin/sx-nodejs run
+exit 0;

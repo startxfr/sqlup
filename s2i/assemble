@@ -23,32 +23,6 @@ cat << "EOF"
 |  
 |  
 EOF
-DIRFROM="$S2I_DEST"
-if [[ -f /tmp/src/sqlup.json ]]; then
-    echo "Found sqlup configuration in /tmp/src/sqlup.json"
-    cp -f /tmp/src/sqlup.json $CONF_PATH/sqlup.json
-    DIRFROM="/tmp/src"
-    echo "Copy sqlup configuration to $CONF_PATH/sqlup.json"
-fi;
-if [[ -f /tmp/sqlup.json ]]; then
-    echo "Found sqlup configuration in /tmp/sqlup.json"
-    cp -f /tmp/sqlup.json $CONF_PATH/sqlup.json
-    DIRFROM="/tmp"
-    echo "Copy sqlup configuration to $CONF_PATH/sqlup.json"
-fi;
-if [[ -f $APP_PATH/sqlup.json ]]; then
-    echo "Found sqlup configuration in $APP_PATH/sqlup.json"
-    cp -f $APP_PATH/sqlup.json $CONF_PATH/sqlup.json
-    DIRFROM="$APP_PATH"
-    echo "Copy sqlup configuration to $CONF_PATH/sqlup.json"
-fi;
-if [[ -d $DIRFROM ]]; then
-  echo "Copy SQL scripts into $DATA_PATH/"
-  cp -f -R $DIRFROM/* $DATA_PATH/
-fi;
-cd $APP_PATH
-npm install -production
-npm dedupe
-npm cache verify
-npm cache clean --force
+
+/bin/sx-nodejs build
 exit 0;
