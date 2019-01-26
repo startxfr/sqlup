@@ -1,7 +1,7 @@
 FROM startx/sv-nodejs:alpine3
 MAINTAINER STARTX "dev@startx.fr"
 
-ENV SQLUP_VERSION=0.1.11 \
+ENV SQLUP_VERSION=0.1.12 \
     SX_ID="startx/sqlup" \
     SX_SERVICE="sqlup" \
     SX_NAME="Startx SQLUP (alpine)" \
@@ -29,7 +29,7 @@ LABEL name="startx/sqlup-$SQLUP_VERSION" \
       io.openshift.s2i.scripts-url="image:///s2i" \
       fr.startx.component="$SX_ID:$SQLUP_VERSION"
 
-COPY ./sx /tmp/sx
+COPY ./sx /s2i
 COPY ./core $APP_PATH/core
 COPY ./app.js $APP_PATH/app.js
 COPY ./package.json $APP_PATH/package.json

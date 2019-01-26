@@ -158,14 +158,14 @@ $app = {
     }
     else {
       try {
-        $app.tmpMsgCfgload = "Configuration loaded from " + this.config.conf_path + '/sqlup.json';
+        $app.tmpMsgCfgload = "Configuration loaded from " + cfg_file;
         mg.recursive($app.config, JSON.parse(fs.readFileSync(cfg_file, 'utf-8')));
-        $log.debug("Cfg source   : " + this.config.conf_path + '/sqlup.json');
+        $log.debug("Cfg source   : " + cfg_file);
       }
       catch (e) {
         $log.error("Cfg source   : is missing");
         $log.debug("sqlup configuration could not be found");
-        $log.debug("add environment variable SQLUP_CONF or create " + this.config.conf_path + "/sqlup.json config file");
+        $log.debug("add environment variable SQLUP_CONF or create " + cfg_file + " config file");
         this.fatalError('configuration file or variable is missing');
       }
     }
