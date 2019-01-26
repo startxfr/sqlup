@@ -1,3 +1,3 @@
-/* global require, process, $log, $timer */
+/* global require, process, $log, $timer, Logger */
 
 require("./core/app").launch();
