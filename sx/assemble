@@ -8,28 +8,29 @@
 #
 
 cat << "EOF"
-|                _                 
-|               (_ )               
-|   ____   __ _  | |  _   _  ____  
-|  / ___) / _` ) | | ( ) ( )(  _ \ 
+|                _
+|               (_ )
+|   ____   __ _  | |  _   _  ____
+|  / ___) / _` ) | | ( ) ( )(  _ \
 |  \__  \( (_) | | | | (_) || (_) )
-|  (____/ \___ |(___) \___/ | ___/ 
-|            | |            | |    
-|            (_)            (_)    
-|    __  ____ ____ ____ _  _ ____ __   ____ 
+|  (____/ \___ |(___) \___/ | ___/
+|            | |            | |
+|            (_)            (_)
+|    __  ____ ____ ____ _  _ ____ __   ____
 |   / _\/ ___) ___|  __| \/ |  _ (  ) (  __)
-|  /    \___ \___ \) _)/ \/ \) _ ( (_/\) _| 
-|  \_/\_(____(____(____)_)(_(____|____(____) 
-|  
-|  
+|  /    \___ \___ \) _)/ \/ \) _ ( (_/\) _|
+|  \_/\_(____(____(____)_)(_(____|____(____)
+|
+|
 EOF
 
+source $SX_LIBDIR/sx-nodejs
 if [[ -r $S2I_DEST ]]; then
-  echoVerbose "Move sqlup source from $S2I_DEST > $DATA_PATH"
-  mv $S2I_DEST/*.json $S2I_DEST/*.sql $DATA_PATH/
+    echo "Move sqlup source from $S2I_DEST > $DATA_PATH"
+    mv $S2I_DEST/*.json $S2I_DEST/*.sql $DATA_PATH/
 else
-  echoVerbose "Could not move sqlup source because $S2I_DEST is not readable"
+    echo "Could not move sqlup source because $S2I_DEST is not readable"
 fi
- 
-/bin/sx-nodejs build
+
+nodejsBuild
 exit 0;
