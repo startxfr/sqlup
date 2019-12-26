@@ -1,0 +1,21 @@
+{
+    "name": "sqlup-dev",
+    "version": "0.0.2",
+    "path": "{{{DATA_PATH}}}",
+    "waitStartup": 20,
+    "server": {
+        "type": "mysql",
+        "host": "{{{SQLUP_HOST}}}",
+        "port": "3306",
+        "user": "root",
+        "password": "{{{SQLUP_PWD}}}",
+        "database": "{{{SQLUP_DB}}}"
+    },
+    "sequence": {
+        "0.0.0": "v0.0.0.sql",
+        "0.0.1": "v0.0.1.sql",
+        "0.0.1-patch": "v0.0.1-patch.sql",
+        "0.0.2b": "v0.0.2b.sql",
+        "0.0.2": "v0.0.2.sql"
+    }
+}
