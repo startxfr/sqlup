@@ -3,7 +3,7 @@
 **sqlup** for **sql** **up**grade is an an open-source job container who apply sql patch to a database following a sequentially versionned plan.
 Very light (application less than 100Ko, full container stack for less than 30Mo) application configured with a single json file, to deploy and follow update lifecycle of a database stored in mysql, posgresql or dynamodb backend.
 
-[![Build Status](https://travis-ci.org/startxfr/sqlup.svg?branch=master)](https://travis-ci.org/startxfr/sqlup) [![npm dependencies](https://david-dm.org/startxfr/sqlup.svg)](https://www.npmjs.com/package/sqlup) [![last commit](https://img.shields.io/github/last-commit/startxfr/sqlup.svg)](https://github.com/startxfr/sqlup) [![licence](https://img.shields.io/github/license/startxfr/sqlup.svg)](https://github.com/startxfr/sqlup) 
+[![Build Status](https://travis-ci.org/startxfr/sqlup.svg?branch=master)](https://travis-ci.org/startxfr/sqlup) [![npm dependencies](https://david-dm.org/startxfr/sqlup.svg)](https://www.npmjs.com/package/sqlup) [![last commit](https://img.shields.io/github/last-commit/startxfr/sqlup.svg)](https://github.com/startxfr/sqlup) [![licence](https://img.shields.io/github/license/startxfr/sqlup.svg)](https://github.com/startxfr/sqlup)
 
 ## Getting Started
 
@@ -20,6 +20,7 @@ Very light (application less than 100Ko, full container stack for less than 30Mo
 ## Documentation
 
 If you want to have more information on how to install, develop and run this framework and use it in your project, please read the [full documentation](https://github.com/startxfr/sqlup/tree/master/docs/README.md) or our [user guides](https://github.com/startxfr/sqlup/tree/master/docs/guides/README.md) and execute the following steps :
+
 1. [Install sqlup](https://github.com/startxfr/sqlup/tree/master/docs/guides/1.Install.md)
 2. [Configure sqlup](https://github.com/startxfr/sqlup/tree/master/docs/guides/2.Configure.md)
 3. [Run your job](https://github.com/startxfr/sqlup/tree/master/docs/guides/3.Run.md)
@@ -30,9 +31,9 @@ If you run into difficulties installing or running sqlup, you can [create an iss
 
 ## Built With
 
-* [docker](https://www.docker.com/) - Container plateform
-* [alpine](https://alpinelinux.org/) - OS envelop
-* [nodejs](https://nodejs.org) - Application server
+- [docker](https://www.docker.com/) - Container plateform
+- [alpine](https://alpinelinux.org/) - OS envelop
+- [nodejs](https://nodejs.org) - Application server
 
 ## Contributing
 
