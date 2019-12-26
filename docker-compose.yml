@@ -1,6 +1,6 @@
 app:
   container_name: "sqlup"
   build: .
-  command: ["npm" , "test"]
+  command: ["npm", "test"]
   environment:
-  - SX_DEBUG=true
+    - SX_DEBUG=true
