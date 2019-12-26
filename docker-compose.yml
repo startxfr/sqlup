@@ -18,9 +18,9 @@ app:
     - "./dev/:/sqlup:z"
     - "./test:/usr/src/app/test:z"
   working_dir: /usr/src/app
-## build application 
-  command: ["npm" , "run" , "build"]
-## run application 
+  ## build application
+  command: ["npm", "run", "build"]
+## run application
 #  command: ["npm" , "start"]
 ## build and start application for dev environement
 #  command: ["npm" , "run", "dev"]
@@ -60,4 +60,4 @@ db-mariadb:
   mem_limit: 2g
   memswap_limit: 3g
   environment:
-   - MYSQL_ROOT_PASSWORD=hguyFtgfR4r9R4r76
+    - MYSQL_ROOT_PASSWORD=hguyFtgfR4r9R4r76
