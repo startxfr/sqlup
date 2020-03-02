@@ -4,7 +4,8 @@ metadata:
   name: sqlup-template-build
   annotations:
     openshift.io/display-name: SQLUP Database Upgrader using build strategy
-    description: Template for creating an empty mariadb database and use SQLUP job with configuration 
+    description:
+      Template for creating an empty mariadb database and use SQLUP job with configuration
       and sql patch from a source code repository to populate structure and data. Use
       secret to store credential and build and deploy strategy to start database and job.
     iconClass: icon-mysql-database
@@ -12,356 +13,357 @@ metadata:
     openshift.io/provider-display-name: STARTX
     openshift.io/documentation-url: https://github.com/startxfr/sqlup/blob/master/README.md
     openshift.io/support-url: https://github.com/startxfr/sqlup/issues/new
-message: Your application ${APP_NAME} have been created in your project. You can use
+message:
+  Your application ${APP_NAME} have been created in your project. You can use
   openshift console to monitor it building and deployement status.
 labels:
   template: sqlup-template-build
 objects:
-- kind: ImageStream
-  apiVersion: v1
-  metadata:
-    name: sqlup
-    annotations:
-      openshift.io/display-name: SQLUP Database Upgrader (S2I)
-      openshift.io/generated-by: STARTX
-      description: Build your sql files into an SQLUP container to create and/or upgrade database structure
-      iconClass: icon-mysql-database
-      tags: builder,startx,alpine,nodejs,sql,sqlup,latest
-      supports: mysql
-      sampleRepo: https://github.com/startxfr/sqlup-example.git
-    labels:
-      base-image: sqlup
-      provider: startx
-      template: sqlup-template-build
-  spec:
-    tags:
-    - name: "${SQLUP_VERSION}"
+  - kind: ImageStream
+    apiVersion: v1
+    metadata:
+      name: sqlup
       annotations:
-        openshift.io/display-name: SQLUP Database Upgrader (${SQLUP_VERSION})
+        openshift.io/display-name: SQLUP Database Upgrader (S2I)
         openshift.io/generated-by: STARTX
-        description: Build your sql files into an SQLUP container to create and/or upgrade database structure (${SQLUP_VERSION})
+        description: Build your sql files into an SQLUP container to create and/or upgrade database structure
         iconClass: icon-mysql-database
-        tags: builder,startx,alpine,nodejs,sql,sqlup,${SQLUP_VERSION}
+        tags: builder,startx,alpine,nodejs,sql,sqlup,latest
         supports: mysql
-        version: ${SQLUP_VERSION}
         sampleRepo: https://github.com/startxfr/sqlup-example.git
-      from:
-        kind: DockerImage
-        name: startx/sqlup:${SQLUP_VERSION}
-- kind: ImageStream
-  apiVersion: v1
-  metadata:
-    name: mariadb
-    labels:
-      base-image: mariadb
-      provider: startx
-      template: sqlup-template-build
-    annotations:
-      openshift.io/display-name: Mariadb official image (${MYSQL_VERSION})
-      openshift.io/generated-by: STARTX
-      description: "Mariadb ${MYSQL_VERSION} official image hosted on dockerhub"
-      iconClass: icon-mariadb
-      tags: "maridb,sql,mariadb-${MYSQL_VERSION}"
-      supports: mysql
-      version: ${SQLUP_VERSION}
-  spec:
-    tags:
-    - name: "${MYSQL_VERSION}"
+      labels:
+        base-image: sqlup
+        provider: startx
+        template: sqlup-template-build
+    spec:
+      tags:
+        - name: "${SQLUP_VERSION}"
+          annotations:
+            openshift.io/display-name: SQLUP Database Upgrader (${SQLUP_VERSION})
+            openshift.io/generated-by: STARTX
+            description: Build your sql files into an SQLUP container to create and/or upgrade database structure (${SQLUP_VERSION})
+            iconClass: icon-mysql-database
+            tags: builder,startx,alpine,nodejs,sql,sqlup,${SQLUP_VERSION}
+            supports: mysql
+            version: ${SQLUP_VERSION}
+            sampleRepo: https://github.com/startxfr/sqlup-example.git
+          from:
+            kind: DockerImage
+            name: startx/sqlup:${SQLUP_VERSION}
+  - kind: ImageStream
+    apiVersion: v1
+    metadata:
+      name: mariadb
+      labels:
+        base-image: mariadb
+        provider: startx
+        template: sqlup-template-build
       annotations:
         openshift.io/display-name: Mariadb official image (${MYSQL_VERSION})
         openshift.io/generated-by: STARTX
-        description: Mariadb ${MYSQL_VERSION} official image hosted on dockerhub
+        description: "Mariadb ${MYSQL_VERSION} official image hosted on dockerhub"
         iconClass: icon-mariadb
         tags: "maridb,sql,mariadb-${MYSQL_VERSION}"
         supports: mysql
-        version: "${SQLUP_VERSION}"
-      from:
-        kind: DockerImage
-        name: "mariadb:${MYSQL_VERSION}"
-- kind: ImageStream
-  apiVersion: v1
-  metadata:
-    name: "${APP_NAME}-sqlup"
-    annotations:
-      openshift.io/display-name: Application ${APP_NAME}
-      openshift.io/generated-by: STARTX
-    labels:
-      base-image: sqlup
-      app: "${APP_NAME}-sqlup"
-      project: "${APP_NAME}"
-      type: "image"
-      provider: startx
-  spec:
-    tags:
-    - name: latest
+        version: ${SQLUP_VERSION}
+    spec:
+      tags:
+        - name: "${MYSQL_VERSION}"
+          annotations:
+            openshift.io/display-name: Mariadb official image (${MYSQL_VERSION})
+            openshift.io/generated-by: STARTX
+            description: Mariadb ${MYSQL_VERSION} official image hosted on dockerhub
+            iconClass: icon-mariadb
+            tags: "maridb,sql,mariadb-${MYSQL_VERSION}"
+            supports: mysql
+            version: "${SQLUP_VERSION}"
+          from:
+            kind: DockerImage
+            name: "mariadb:${MYSQL_VERSION}"
+  - kind: ImageStream
+    apiVersion: v1
+    metadata:
+      name: "${APP_NAME}-sqlup"
       annotations:
-        openshift.io/display-name: SQLUP Posthook for ${APP_NAME}
-        description: post-hook for ${APP_NAME} database using SQLUP
-        iconClass: icon-mysql-database
-        tags: startx,alpine,nodejs,sqlup-${SQLUP_VERSION},${APP_NAME}
-        supports: mysql
-        version: latest
-- kind: Secret
-  apiVersion: v1
-  metadata:
-    name: "sqlup-credential"
-    labels:
-      app: sqlup-job
-      type: job
-      provider: startx
-      template: sqlup-template-build
-  stringData:
-    MYSQL_ROOT_PASSWORD: ${DB_PWD}
-    SQLUP_HOST: ${APP_NAME}
-    MYSQL_DATABASE: ${DB_NAME}
-- kind: BuildConfig
-  apiVersion: v1
-  metadata:
-    name: "${APP_NAME}"
-    labels:
-      app: "${APP_NAME}"
-      provider: startx
-      template: sqlup-template-build
-    annotations:
-      openshift.io/generated-by: STARTX
-  spec:
-    triggers:
-      - type: Generic
-        generic:
-          secret: "${WEBHOOK_TOKEN}_${APP_NAME}"
-      - type: GitHub
-        github:
-          secret: "${WEBHOOK_TOKEN}_${APP_NAME}"
-      - type: ImageChange
-        imageChange: {}
-      - type: ConfigChange
-    runPolicy: SerialLatestOnly
-    source:
-      type: Git
-      git:
-        uri: "${SOURCE_GIT}"
-        ref: "${SOURCE_BRANCH}"
-    strategy:
-      type: Source
-      sourceStrategy:
-        from:
-          kind: ImageStreamTag
-          name: 'sqlup:latest'
-    output:
-      to:
-        kind: ImageStreamTag
-        name: '${APP_NAME}-sqlup:latest'
-- kind: DeploymentConfig
-  apiVersion: v1
-  metadata:
-    name: "${APP_NAME}"
-    labels:
-      app: "${APP_NAME}"
-      provider: startx
-      template: sqlup-template-build
-    annotations:
-      openshift.io/generated-by: STARTX
-  spec:
-    strategy:
-      type: Recreate
-    triggers:
-    - type: ImageChange
-      imageChangeParams:
-        automatic: true
-        containerNames:
-        - "${APP_NAME}"
-        from:
-          kind: ImageStreamTag
-          name: "mariadb:${MYSQL_VERSION}"
-    - type: ConfigChange
-    replicas: 1
-    test: false
-    selector:
-      app: "${APP_NAME}"
-      deploymentconfig: "${APP_NAME}"
-    template:
-      metadata:
-        labels:
-          app: "${APP_NAME}"
-          provider: startx
-          template: sqlup-template-build
-          deploymentconfig: "${APP_NAME}"
-        annotations:
-          openshift.io/generated-by: STARTX
-      spec:
-        volumes:
-          - name: sqlup-mysql
-            emptyDir: {}
-        containers:
-        - name: "${APP_NAME}"
-          image: 
-          ports:
-            - name: mysql
-              containerPort: 3306
-              protocol: TCP
-          env:
-            - name: MYSQL_ROOT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: sqlup-credential
-                  key: MYSQL_ROOT_PASSWORD
-            - name: MYSQL_DATABASE
-              valueFrom:
-                secretKeyRef:
-                  name: sqlup-credential
-                  key: MYSQL_DATABASE
-          volumeMounts:
-            - name: sqlup-mysql
-              mountPath: /var/lib/mysql
-          terminationMessagePath: "/master/termination-log"
-          imagePullPolicy: Always
-        restartPolicy: Always
-        terminationGracePeriodSeconds: 30
-        dnsPolicy: ClusterFirst
-- kind: DeploymentConfig
-  apiVersion: v1
-  metadata:
-    name: "${APP_NAME}-job"
-    labels:
-      app: "${APP_NAME}-job"
-      provider: startx
-      template: sqlup-template-build
-    annotations:
-      openshift.io/generated-by: STARTX
-  spec:
-    strategy:
-      type: Recreate
-    recreateParams:
-      TimeoutSeconds: 60
-      maxUnavailable: 1
-      maxSurge : 1
-    triggers:
-    - type: ImageChange
-      imageChangeParams:
-        automatic: true
-        containerNames:
-        - "${APP_NAME}-job"
-        from:
+        openshift.io/display-name: Application ${APP_NAME}
+        openshift.io/generated-by: STARTX
+      labels:
+        base-image: sqlup
+        app: "${APP_NAME}-sqlup"
+        project: "${APP_NAME}"
+        type: "image"
+        provider: startx
+    spec:
+      tags:
+        - name: latest
+          annotations:
+            openshift.io/display-name: SQLUP Posthook for ${APP_NAME}
+            description: post-hook for ${APP_NAME} database using SQLUP
+            iconClass: icon-mysql-database
+            tags: startx,alpine,nodejs,sqlup-${SQLUP_VERSION},${APP_NAME}
+            supports: mysql
+            version: latest
+  - kind: Secret
+    apiVersion: v1
+    metadata:
+      name: "sqlup-credential"
+      labels:
+        app: sqlup-job
+        type: job
+        provider: startx
+        template: sqlup-template-build
+    stringData:
+      MYSQL_ROOT_PASSWORD: ${DB_PWD}
+      SQLUP_HOST: ${APP_NAME}
+      MYSQL_DATABASE: ${DB_NAME}
+  - kind: BuildConfig
+    apiVersion: v1
+    metadata:
+      name: "${APP_NAME}"
+      labels:
+        app: "${APP_NAME}"
+        provider: startx
+        template: sqlup-template-build
+      annotations:
+        openshift.io/generated-by: STARTX
+    spec:
+      triggers:
+        - type: Generic
+          generic:
+            secret: "${WEBHOOK_TOKEN}_${APP_NAME}"
+        - type: GitHub
+          github:
+            secret: "${WEBHOOK_TOKEN}_${APP_NAME}"
+        - type: ImageChange
+          imageChange: {}
+        - type: ConfigChange
+      runPolicy: SerialLatestOnly
+      source:
+        type: Git
+        git:
+          uri: "${SOURCE_GIT}"
+          ref: "${SOURCE_BRANCH}"
+      strategy:
+        type: Source
+        sourceStrategy:
+          from:
+            kind: ImageStreamTag
+            name: "sqlup:latest"
+      output:
+        to:
           kind: ImageStreamTag
           name: "${APP_NAME}-sqlup:latest"
-    - type: ConfigChange
-    replicas: 1
-    test: false
-    selector:
-      app: "${APP_NAME}-job"
-      deploymentconfig: "${APP_NAME}-job"
-    template:
-      metadata:
-        labels:
-          app: "${APP_NAME}-job"
-          provider: startx
-          template: sqlup-template-build
-          deploymentconfig: "${APP_NAME}-job"
-        annotations:
-          openshift.io/generated-by: STARTX
-      spec:
-        volumes:
-          - name: sqlup-mysql
-            emptyDir: {}
-        containers:
-        - name: "${APP_NAME}-job"
-          image: 
-          env:
-          - name: SX_DEBUG
-            value: "false"
-          - name: NODE_ENV
-            value: "development"
-          - name: SQLUP_PWD
-            valueFrom:
-              secretKeyRef:
-                name: sqlup-credential
-                key: MYSQL_ROOT_PASSWORD
-          - name: SQLUP_HOST
-            valueFrom:
-              secretKeyRef:
-                name: sqlup-credential
-                key: SQLUP_HOST
-          - name: SQLUP_DB
-            valueFrom:
-              secretKeyRef:
-                name: sqlup-credential
-                key: MYSQL_DATABASE
-          resources:
-            requests:
-              memory: "${MEMORY_LIMIT}"
-              cpu: 0.1
-            limits:
-              memory: "${MEMORY_LIMIT}"
-          terminationMessagePath: "/master/termination-log"
-          imagePullPolicy: Always
-        activeDeadlineSeconds: 600
-        restartPolicy: Always
-        terminationGracePeriodSeconds: 30
-        dnsPolicy: ClusterFirst
-- kind: Service
-  apiVersion: v1
-  metadata:
-    name: "${APP_NAME}"
-    creationTimestamp: 
-    labels:
-      app: "${APP_NAME}"
-      provider: startx
-      template: sqlup-template-build
-    annotations:
-      openshift.io/generated-by: STARTX
-  spec:
-    ports:
-    - protocol: TCP
-      port: 3306
-      targetPort: 3306
-    selector:
-      app: "${APP_NAME}"
-      deploymentconfig: "${APP_NAME}"
-    type: ClusterIP
+  - kind: DeploymentConfig
+    apiVersion: v1
+    metadata:
+      name: "${APP_NAME}"
+      labels:
+        app: "${APP_NAME}"
+        provider: startx
+        template: sqlup-template-build
+      annotations:
+        openshift.io/generated-by: STARTX
+    spec:
+      strategy:
+        type: Recreate
+      triggers:
+        - type: ImageChange
+          imageChangeParams:
+            automatic: true
+            containerNames:
+              - "${APP_NAME}"
+            from:
+              kind: ImageStreamTag
+              name: "mariadb:${MYSQL_VERSION}"
+        - type: ConfigChange
+      replicas: 1
+      test: false
+      selector:
+        app: "${APP_NAME}"
+        deploymentconfig: "${APP_NAME}"
+      template:
+        metadata:
+          labels:
+            app: "${APP_NAME}"
+            provider: startx
+            template: sqlup-template-build
+            deploymentconfig: "${APP_NAME}"
+          annotations:
+            openshift.io/generated-by: STARTX
+        spec:
+          volumes:
+            - name: sqlup-mysql
+              emptyDir: {}
+          containers:
+            - name: "${APP_NAME}"
+              image:
+              ports:
+                - name: mysql
+                  containerPort: 3306
+                  protocol: TCP
+              env:
+                - name: MYSQL_ROOT_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: sqlup-credential
+                      key: MYSQL_ROOT_PASSWORD
+                - name: MYSQL_DATABASE
+                  valueFrom:
+                    secretKeyRef:
+                      name: sqlup-credential
+                      key: MYSQL_DATABASE
+              volumeMounts:
+                - name: sqlup-mysql
+                  mountPath: /var/lib/mysql
+              terminationMessagePath: "/master/termination-log"
+              imagePullPolicy: Always
+          restartPolicy: Always
+          terminationGracePeriodSeconds: 30
+          dnsPolicy: ClusterFirst
+  - kind: DeploymentConfig
+    apiVersion: v1
+    metadata:
+      name: "${APP_NAME}-job"
+      labels:
+        app: "${APP_NAME}-job"
+        provider: startx
+        template: sqlup-template-build
+      annotations:
+        openshift.io/generated-by: STARTX
+    spec:
+      strategy:
+        type: Recreate
+      recreateParams:
+        TimeoutSeconds: 60
+        maxUnavailable: 1
+        maxSurge: 1
+      triggers:
+        - type: ImageChange
+          imageChangeParams:
+            automatic: true
+            containerNames:
+              - "${APP_NAME}-job"
+            from:
+              kind: ImageStreamTag
+              name: "${APP_NAME}-sqlup:latest"
+        - type: ConfigChange
+      replicas: 1
+      test: false
+      selector:
+        app: "${APP_NAME}-job"
+        deploymentconfig: "${APP_NAME}-job"
+      template:
+        metadata:
+          labels:
+            app: "${APP_NAME}-job"
+            provider: startx
+            template: sqlup-template-build
+            deploymentconfig: "${APP_NAME}-job"
+          annotations:
+            openshift.io/generated-by: STARTX
+        spec:
+          volumes:
+            - name: sqlup-mysql
+              emptyDir: {}
+          containers:
+            - name: "${APP_NAME}-job"
+              image:
+              env:
+                - name: SX_DEBUG
+                  value: "false"
+                - name: NODE_ENV
+                  value: "development"
+                - name: SQLUP_PWD
+                  valueFrom:
+                    secretKeyRef:
+                      name: sqlup-credential
+                      key: MYSQL_ROOT_PASSWORD
+                - name: SQLUP_HOST
+                  valueFrom:
+                    secretKeyRef:
+                      name: sqlup-credential
+                      key: SQLUP_HOST
+                - name: SQLUP_DB
+                  valueFrom:
+                    secretKeyRef:
+                      name: sqlup-credential
+                      key: MYSQL_DATABASE
+              resources:
+                requests:
+                  memory: "${MEMORY_LIMIT}"
+                  cpu: 0.1
+                limits:
+                  memory: "${MEMORY_LIMIT}"
+              terminationMessagePath: "/master/termination-log"
+              imagePullPolicy: Always
+          activeDeadlineSeconds: 600
+          restartPolicy: Always
+          terminationGracePeriodSeconds: 30
+          dnsPolicy: ClusterFirst
+  - kind: Service
+    apiVersion: v1
+    metadata:
+      name: "${APP_NAME}"
+      creationTimestamp:
+      labels:
+        app: "${APP_NAME}"
+        provider: startx
+        template: sqlup-template-build
+      annotations:
+        openshift.io/generated-by: STARTX
+    spec:
+      ports:
+        - protocol: TCP
+          port: 3306
+          targetPort: 3306
+      selector:
+        app: "${APP_NAME}"
+        deploymentconfig: "${APP_NAME}"
+      type: ClusterIP
 parameters:
-- name: APP_NAME
-  displayName: Database service
-  description: The name of the created service
-  value: mysql
-  required: true
-- name: SQLUP_VERSION
-  displayName: SQLUP release
-  description:  SQLUP version to use in this application. Choose in latest, testing, stable, 0.0.7, 0.1.14
-  value: latest
-  required: true
-- name: MYSQL_VERSION
-  displayName: Mariadb release
-  description:  Mariadb version to use in this application. Choose in latest, 5.5.60, 10.3, 10.3.6
-  value: "10.3.6"
-  required: true
-- name: SOURCE_GIT
-  displayName: Source repository
-  description: URL to the source code with sqlup.json config file and *.sql associated content
-  value: https://github.com/startxfr/sqlup-example.git
-  required: true
-- name: SOURCE_BRANCH
-  displayName: Source branch
-  description: Name of the default branch
-  value: master
-  required: true
-- name: WEBHOOK_TOKEN
-  displayName: Webhook token
-  description: Secret token to use for webhook to github or generic
-  generate: expression
-  from: "[a-zA-Z0-9]{24}"
-  required: true
-- name: DB_NAME
-  displayName: Database name
-  description: database name to use
-  value: mydatabase
-  required: true
-- name: DB_PWD
-  displayName: Database password
-  description: database password to use
-  generate: expression
-  from: "[a-zA-Z0-9]{16}"
-  required: true
-- name: MEMORY_LIMIT
-  displayName: Memory Limit for data nodes
-  description: Maximum amount of memory data container can use.
-  value: 128Mi
+  - name: APP_NAME
+    displayName: Database service
+    description: The name of the created service
+    value: mysql
+    required: true
+  - name: SQLUP_VERSION
+    displayName: SQLUP release
+    description: SQLUP version to use in this application. Choose in latest, testing, stable, 0.0.7, 0.1.0, 0.1.19
+    value: latest
+    required: true
+  - name: MYSQL_VERSION
+    displayName: Mariadb release
+    description: Mariadb version to use in this application. Choose in latest, 5.5.60, 10.3, 10.3.6
+    value: "10.3.6"
+    required: true
+  - name: SOURCE_GIT
+    displayName: Source repository
+    description: URL to the source code with sqlup.json config file and *.sql associated content
+    value: https://github.com/startxfr/sqlup-example.git
+    required: true
+  - name: SOURCE_BRANCH
+    displayName: Source branch
+    description: Name of the default branch
+    value: master
+    required: true
+  - name: WEBHOOK_TOKEN
+    displayName: Webhook token
+    description: Secret token to use for webhook to github or generic
+    generate: expression
+    from: "[a-zA-Z0-9]{24}"
+    required: true
+  - name: DB_NAME
+    displayName: Database name
+    description: database name to use
+    value: mydatabase
+    required: true
+  - name: DB_PWD
+    displayName: Database password
+    description: database password to use
+    generate: expression
+    from: "[a-zA-Z0-9]{16}"
+    required: true
+  - name: MEMORY_LIMIT
+    displayName: Memory Limit for data nodes
+    description: Maximum amount of memory data container can use.
+    value: 128Mi
