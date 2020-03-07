@@ -1,7 +1,7 @@
 FROM startx/sv-nodejs:alpine3
 MAINTAINER STARTX "dev@startx.fr"
 
-ENV SQLUP_VERSION=0.1.14 \
+ENV SQLUP_VERSION=0.1.21 \
     SX_ID="startx/sqlup" \
     SX_SERVICE="sqlup" \
     SX_NAME="Startx SQLUP (alpine)" \
@@ -36,16 +36,16 @@ COPY ./app.js $APP_PATH/app.js
 COPY ./package.json $APP_PATH/package.json
 
 USER root
-RUN apk update && apk upgrade &&
-    mkdir -p $APP_PATH $CONF_PATH $DATA_PATH /.npm /.config &&
-    cd $APP_PATH &&
-    npm install &&
-    npm dedupe &&
-    npm cache verify &&
-    npm cache clean --force &&
-    chgrp -R 0 $APP_PATH $CONF_PATH $DATA_PATH /.npm /.config &&
-    chown -R 1001:0 $APP_PATH $CONF_PATH $DATA_PATH /.npm /.config &&
-    chmod -R g=u $APP_PATH $CONF_PATH $DATA_PATH /.npm /.config &&
+RUN apk update && apk upgrade && \
+    mkdir -p $APP_PATH $CONF_PATH $DATA_PATH /.npm /.config && \
+    cd $APP_PATH && \
+    npm install && \
+    npm dedupe && \
+    npm cache verify && \
+    npm cache clean --force && \
+    chgrp -R 0 $APP_PATH $CONF_PATH $DATA_PATH /.npm /.config && \
+    chown -R 1001:0 $APP_PATH $CONF_PATH $DATA_PATH /.npm /.config && \
+    chmod -R g=u $APP_PATH $CONF_PATH $DATA_PATH /.npm /.config && \
     /bin/sx-nodejs assemble
 
 USER 1001

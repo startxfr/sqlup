@@ -3,7 +3,8 @@ kind: Template
 metadata:
   name: sqlup-configmap-template
   annotations:
-    description: Template for creating an empty mariadb database and use SQLUP job with configuration 
+    description:
+      Template for creating an empty mariadb database and use SQLUP job with configuration
       and sql patch from an embed example to populate structure and data using configMap and secret.
     iconClass: icon-mysql-database
     tags: sqlup,nodejs,startx,job,sql
@@ -11,214 +12,214 @@ metadata:
     openshift.io/documentation-url: https://github.com/startxfr/sqlup/blob/master/README.md
     openshift.io/support-url: https://github.com/startxfr/sqlup/issues/new
 objects:
-- kind: DeploymentConfig
-  apiVersion: v1
-  metadata:
-    name: "sqlup-mysql"
-    labels:
-      app: sqlup-job
-      type: mysql
-      provider: startx
-      template: sqlup-configmap-template
-  spec:
-    strategy:
-      type: Recreate
-    triggers:
-      - type: ConfigChange
-    replicas: 1
-    test: false
-    selector:
-      app: sqlup-job
-      type: mysql
-      deploymentconfig: sqlup-mysql
-    template:
-      metadata:
-        labels:
-          app: sqlup-job
-          type: mysql
-          provider: startx
-          template: sqlup-configmap-template
-          deploymentconfig: sqlup-mysql
-      spec:
-        volumes:
-          - name: sqlup-mysql
-            emptyDir: {}
-        containers:
-          - name: mysql
-            image: " "
-            ports:
-              - name: mysql
-                containerPort: 3306
-                protocol: TCP
-            env:
-              - name: MYSQL_ROOT_PASSWORD
-                value: "${DB_PWD}"
-            volumeMounts:
-              - name: sqlup-mysql
-                mountPath: /var/lib/mysql
-            terminationMessagePath: /dev/termination-log
-            imagePullPolicy: IfNotPresent
-        restartPolicy: Always
-        terminationGracePeriodSeconds: 30
-        dnsPolicy: ClusterFirst
-- kind: Service
-  apiVersion: v1
-  metadata:
-    name: "sqlup-mysql"
-    labels:
-      app: sqlup-job
-      type: mysql
-      provider: startx
-      template: sqlup-configmap-template
-  spec:
-    ports:
-      - name: mysql
-        protocol: TCP
-        port: 3306
-        targetPort: 3306
-    selector:
-      app: sqlup-job
-      type: mysql
-      deploymentconfig: sqlup-mysql
-    type: ClusterIP
-    sessionAffinity: None
-- kind: Secret
-  apiVersion: v1
-  metadata:
-    name: "sqlup-credential"
-    labels:
-      app: sqlup-job
-      type: job
-      provider: startx
-      template: sqlup-configmap-template
-  stringData:
-    MYSQL_ROOT_PASSWORD: "${DB_PWD}"
-    MYSQL_HOST: "${DB_HOST}"
-    MYSQL_DB: "${DB_NAME}"
-- kind: ConfigMap
-  apiVersion: v1
-  metadata:
-    name: "sqlup-config"
-    labels:
-      app: sqlup-job
-      type: job
-      provider: startx
-      template: sqlup-configmap-template
-  data:
-    sqlup.json: "${SQLUP_CONF}"
-    v0.0.0.sql: "SET names 'utf8';"
-    v0.0.1.sql: "SET names 'utf8';"
-- kind: Job
-  apiVersion: batch/v1
-  metadata:
-    name: "sqlup-job"
-    labels:
-      app: sqlup-job
-      type: job
-      provider: startx
-      template: sqlup-configmap-template
-  spec:
-    template:
-      metadata:
-        labels:
-          name: "sqlup-job"
-          app: sqlup-job
-          type: job
-          provider: startx
-          template: sqlup-configmap-template
-        annotations:
-          pod.alpha.kubernetes.io/initialized: 'true'
-          scheduler.alpha.kubernetes.io/affinity: "{}"
-      spec:
-        activeDeadlineSeconds: 600
-        restartPolicy: OnFailure
-        containers:
-        - name: sqlup-job
-          env:
-          - name: SX_DEBUG
-            value: "false"
-          - name: NODE_ENV
-            value: "development"
-          - name: SQLUP_PWD
-            valueFrom:
-              secretKeyRef:
-                name: sqlup-credential
-                key: MYSQL_ROOT_PASSWORD
-          - name: SQLUP_HOST
-            valueFrom:
-              secretKeyRef:
-                name: sqlup-credential
-                key: MYSQL_HOST
-          - name: SQLUP_DB
-            valueFrom:
-              secretKeyRef:
-                name: sqlup-credential
-                key: MYSQL_DB
-          image: "startx/sqlup:${IMAGE_NAME}"
-          imagePullPolicy: Always
-          resources:
-            requests:
-              memory: "${MEMORY_LIMIT}"
-              cpu: 0.1
-            limits:
-              memory: "${MEMORY_LIMIT}"
-          volumeMounts:
-          - mountPath: "/sqlup"
-            name: sqlup-config
-        volumes:
-          - name: sqlup-config
-            configMap:
-              name: "sqlup-config"
-              items:
-              - key: sqlup.json
-                path: sqlup.json
-              - key: v0.0.0.sql
-                path: v0.0.0.sql
-              - key: v0.0.1.sql
-                path: v0.0.1.sql
+  - kind: DeploymentConfig
+    apiVersion: v1
+    metadata:
+      name: "sqlup-mysql"
+      labels:
+        app: sqlup-job
+        type: mysql
+        provider: startx
+        template: sqlup-configmap-template
+    spec:
+      strategy:
+        type: Recreate
+      triggers:
+        - type: ConfigChange
+      replicas: 1
+      test: false
+      selector:
+        app: sqlup-job
+        type: mysql
+        deploymentconfig: sqlup-mysql
+      template:
+        metadata:
+          labels:
+            app: sqlup-job
+            type: mysql
+            provider: startx
+            template: sqlup-configmap-template
+            deploymentconfig: sqlup-mysql
+        spec:
+          volumes:
+            - name: sqlup-mysql
+              emptyDir: {}
+          containers:
+            - name: mysql
+              image: " "
+              ports:
+                - name: mysql
+                  containerPort: 3306
+                  protocol: TCP
+              env:
+                - name: MYSQL_ROOT_PASSWORD
+                  value: "${DB_PWD}"
+              volumeMounts:
+                - name: sqlup-mysql
+                  mountPath: /var/lib/mysql
+              terminationMessagePath: /dev/termination-log
+              imagePullPolicy: IfNotPresent
+          restartPolicy: Always
+          terminationGracePeriodSeconds: 30
+          dnsPolicy: ClusterFirst
+  - kind: Service
+    apiVersion: v1
+    metadata:
+      name: "sqlup-mysql"
+      labels:
+        app: sqlup-job
+        type: mysql
+        provider: startx
+        template: sqlup-configmap-template
+    spec:
+      ports:
+        - name: mysql
+          protocol: TCP
+          port: 3306
+          targetPort: 3306
+      selector:
+        app: sqlup-job
+        type: mysql
+        deploymentconfig: sqlup-mysql
+      type: ClusterIP
+      sessionAffinity: None
+  - kind: Secret
+    apiVersion: v1
+    metadata:
+      name: "sqlup-credential"
+      labels:
+        app: sqlup-job
+        type: job
+        provider: startx
+        template: sqlup-configmap-template
+    stringData:
+      MYSQL_ROOT_PASSWORD: "${DB_PWD}"
+      MYSQL_HOST: "${DB_HOST}"
+      MYSQL_DB: "${DB_NAME}"
+  - kind: ConfigMap
+    apiVersion: v1
+    metadata:
+      name: "sqlup-config"
+      labels:
+        app: sqlup-job
+        type: job
+        provider: startx
+        template: sqlup-configmap-template
+    data:
+      sqlup.json: "${SQLUP_CONF}"
+      v0.0.0.sql: "SET names 'utf8';"
+      v0.0.1.sql: "SET names 'utf8';"
+  - kind: Job
+    apiVersion: batch/v1
+    metadata:
+      name: "sqlup-job"
+      labels:
+        app: sqlup-job
+        type: job
+        provider: startx
+        template: sqlup-configmap-template
+    spec:
+      template:
+        metadata:
+          labels:
+            name: "sqlup-job"
+            app: sqlup-job
+            type: job
+            provider: startx
+            template: sqlup-configmap-template
+          annotations:
+            pod.alpha.kubernetes.io/initialized: "true"
+            scheduler.alpha.kubernetes.io/affinity: "{}"
+        spec:
+          activeDeadlineSeconds: 600
+          restartPolicy: OnFailure
+          containers:
+            - name: sqlup-job
+              env:
+                - name: SX_DEBUG
+                  value: "false"
+                - name: NODE_ENV
+                  value: "development"
+                - name: SQLUP_PWD
+                  valueFrom:
+                    secretKeyRef:
+                      name: sqlup-credential
+                      key: MYSQL_ROOT_PASSWORD
+                - name: SQLUP_HOST
+                  valueFrom:
+                    secretKeyRef:
+                      name: sqlup-credential
+                      key: MYSQL_HOST
+                - name: SQLUP_DB
+                  valueFrom:
+                    secretKeyRef:
+                      name: sqlup-credential
+                      key: MYSQL_DB
+              image: "startx/sqlup:${IMAGE_NAME}"
+              imagePullPolicy: Always
+              resources:
+                requests:
+                  memory: "${MEMORY_LIMIT}"
+                  cpu: 0.1
+                limits:
+                  memory: "${MEMORY_LIMIT}"
+              volumeMounts:
+                - mountPath: "/sqlup"
+                  name: sqlup-config
+          volumes:
+            - name: sqlup-config
+              configMap:
+                name: "sqlup-config"
+                items:
+                  - key: sqlup.json
+                    path: sqlup.json
+                  - key: v0.0.0.sql
+                    path: v0.0.0.sql
+                  - key: v0.0.1.sql
+                    path: v0.0.1.sql
 parameters:
-- name: IMAGE_NAME
-  description: SQLUP release to use (available are latest, testing, stable or 0.1.14)
-  value: latest
-  required: true
-- name: DB_HOST
-  description: database service name or hostname to connect to
-  value: sqlup-mysql
-  required: true
-- name: DB_PWD
-  description: database password to use
-  value: mypassword
-  required: true
-- name: DB_NAME
-  description: database name to use
-  value: mydatabase
-  required: true
-- name: MEMORY_LIMIT
-  displayName: Memory Limit for data nodes
-  description: Maximum amount of memory data container can use.
-  value: 128Mi
-- name: SQLUP_CONF
-  displayName: Configuration object (injected into the configMap)
-  description: Json object string describing the application. see in https://github.com/startx/sqlup/blob/master/docs/guides/2.Configure.md
-  value: >-
-    {
-        "name": "sqlup-dev",
-        "version": "0.0.2",
-        "path": "{{{DATA_PATH}}}",
-        "waitStartup": 20,
-        "server": {
-            "type": "mysql",
-            "host": "{{{SQLUP_HOST}}}",
-            "port": "3306",
-            "user": "root",
-            "password": "{{{SQLUP_PWD}}}",
-            "database": "{{{SQLUP_DB}}}"
-        },
-        "sequence": {
-            "0.0.0": "v0.0.0.sql",
-            "0.0.1": "v0.0.1.sql"
-        }
-    }
-  required: true
+  - name: IMAGE_NAME
+    description: SQLUP release to use (available are latest, testing, stable or 0.1.21)
+    value: latest
+    required: true
+  - name: DB_HOST
+    description: database service name or hostname to connect to
+    value: sqlup-mysql
+    required: true
+  - name: DB_PWD
+    description: database password to use
+    value: mypassword
+    required: true
+  - name: DB_NAME
+    description: database name to use
+    value: mydatabase
+    required: true
+  - name: MEMORY_LIMIT
+    displayName: Memory Limit for data nodes
+    description: Maximum amount of memory data container can use.
+    value: 128Mi
+  - name: SQLUP_CONF
+    displayName: Configuration object (injected into the configMap)
+    description: Json object string describing the application. see in https://github.com/startx/sqlup/blob/master/docs/guides/2.Configure.md
+    value: >-
+      {
+          "name": "sqlup-dev",
+          "version": "0.0.2",
+          "path": "{{{DATA_PATH}}}",
+          "waitStartup": 20,
+          "server": {
+              "type": "mysql",
+              "host": "{{{SQLUP_HOST}}}",
+              "port": "3306",
+              "user": "root",
+              "password": "{{{SQLUP_PWD}}}",
+              "database": "{{{SQLUP_DB}}}"
+          },
+          "sequence": {
+              "0.0.0": "v0.0.0.sql",
+              "0.0.1": "v0.0.1.sql"
+          }
+      }
+    required: true
 labels:
   template: sqlup-configMap-template
